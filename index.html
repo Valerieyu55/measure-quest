@@ -379,11 +379,11 @@ body.viewing-sample{padding-bottom:70px}
 <section id="challenge" class="wrap sec">
   <div class="sec-head">
     <h2>把古老的智慧，帶進你的生活</h2>
-    <p>住家大樓、廟宇、古蹟、鐘樓、坡道、河對岸的建築……身邊的每一座建築與空間，都是值得探索的對象。</p>
+    <p>住家大樓、廟宇、古蹟、鐘樓、坡道、河對岸的建築……身邊的每一座建築與空間，都是值得探索的對象。下雨或不方便外出時，每個任務都可以改選「室內」：體育館、禮堂、樓梯間、中庭都能量。</p>
   </div>
   <div class="why3">
     <div class="w-lead"><b>為什麼有三個任務？</b><span>量不到的東西只有三種樣子，每一種要用不同的方式造出「相似三角形」。</span></div>
-    <div><span class="w-n">01</span><b>高度：往上量不到</b><span>借太陽的平行光，讓建築和標竿各留下一個影子三角形。</span></div>
+    <div><span class="w-n">01</span><b>高度：往上量不到</b><span>借太陽的平行光，讓建築和標竿各留下一個影子三角形；室內改用鏡子反射。</span></div>
     <div><span class="w-n">02</span><b>高度差與坡度：斜的量不到</b><span>用「水平」和「鉛直」在坡面上切出一個小三角形。</span></div>
     <div><span class="w-n">03</span><b>水平距離：走不過去</b><span>用直角和「三點對準」，把對岸的距離搬到自己這一側。</span></div>
     <div class="w-how"><b>怎麼進行</b><span>點一張任務卡 → 依 01～04 四個階段完成 → 每個任務都有 3 層提示，卡住再打開 → 做完的任務會出現在「成果展」→ 最後在「學習歷程」整理成報告匯出。完成幾個任務依老師指定，做兩個以上可以互相比較。本頁會記錄操作歷程（時間、階段、提示與驗算），並自動同步到老師的 Google 試算表。</span></div>
@@ -654,14 +654,15 @@ const TASKS=[
   hints:["水平尺是水平的、落差 TU 是鉛直的，所以直尺、落差和坡面圍成一個小直角三角形。整段坡道和地面、平台邊緣也圍成一個直角三角形。",
          "直尺平行地面，所以坡面與直尺的夾角＝坡面與地面的夾角（同位角），兩個三角形又都有直角 → 兩個三角形相似（AA）。",
          "小三角形「垂直落差 ：水平尺長」和大三角形「＿＿ ：＿＿」相等。這個比值就是坡度。"],
-  svg(hl){
-    const G=250,A=[50,250],Cc=[460,250],B=[460,110],k=140/410;
+  svg(hl,sc){
+    const G=250,A=[50,250],Cc=[460,250],B=[460,110],k=140/410,inn=sc&&sc.in;
     const Px=300,Py=G-k*(Px-A[0]),Tx=210,Ty=Py,Uy=G-k*(Tx-A[0]);
     let s=`<rect width="540" height="300" fill="${C.paper}"/>`;
     s+=`<polygon points="${P(...A)} ${P(...B)} ${P(...Cc)}" fill="${hl?C.blueSoft:C.conc}" stroke="${C.ink}" stroke-width="1.6"/>`;
     s+=`<rect x="460" y="110" width="44" height="140" fill="#DCD4C3" stroke="${C.ink}" stroke-width="1.2"/>`+txt(482,100,"平台",C.muted,"middle",11);
-    for(let x=466;x<500;x+=12) s+=`<ellipse cx="${x+4}" cy="${G-7}" rx="8" ry="7" fill="#9DBB84"/>`;
-    s+=txt(482,G+36,"花圃",C.muted,"middle",11);
+    if(inn){for(let y=122;y<G;y+=16) s+=`<line x1="460" y1="${y}" x2="504" y2="${y}" stroke="#B9AE98" stroke-width="1"/>`; s+=txt(482,G+36,"牆面／儲藏室",C.muted,"middle",11);}
+    else{for(let x=466;x<500;x+=12) s+=`<ellipse cx="${x+4}" cy="${G-7}" rx="8" ry="7" fill="#9DBB84"/>`;
+    s+=txt(482,G+36,"花圃",C.muted,"middle",11);}
     s+=`<line x1="10" y1="${G}" x2="530" y2="${G}" stroke="${C.ink}" stroke-width="1.6"/>`;
     if(hl) s+=`<polygon points="${P(Px,Py)} ${P(Tx,Ty)} ${P(Tx,Uy)}" fill="${C.goldSoft}" stroke="${C.gold}" stroke-width="1"/>`;
     s+=`<line x1="${Px}" y1="${Py}" x2="${Tx}" y2="${Ty}" stroke="${C.gold}" stroke-width="5" stroke-linecap="round"/><rect x="${(Px+Tx)/2-12}" y="${Py-4}" width="24" height="8" rx="4" fill="#fff" stroke="${C.gold}" stroke-width="1"/><circle cx="${(Px+Tx)/2}" cy="${Py}" r="2.4" fill="#2E7A4F"/>`;
@@ -689,12 +690,13 @@ const TASKS=[
          "∠A 與 ∠D 都是直角；∠ACB 與 ∠DCE 是對頂角，所以相等 → 兩個三角形相似（AA）。",
          "找出對應邊：AB 對應 ＿＿，AC 對應 ＿＿。寫成比例式就能求出距離 AB。"],
   svg(hl,sc){
-    sc=sc||{t:"目標",o:"障礙區"}; const road=/車|路|馬/.test(sc.o), band=road?"#DADBE0":C.water, cut=x=>x.length>9?x.slice(0,9)+"…":x;
+    sc=sc||{t:"目標",o:"障礙區"}; const inn=!!sc.in, road=!inn&&/車|路|馬/.test(sc.o), band=inn?"#E9D3A6":road?"#DADBE0":C.water, cut=x=>x.length>9?x.slice(0,9)+"…":x;
     const bank=150,far=50,A=[90,bank],B=[90,far],Cp=[350,bank],D=[454,bank],E=[454,190];
-    let s=`<rect width="540" height="300" fill="${C.grass}"/><rect x="0" y="${far}" width="540" height="${bank-far}" fill="${band}"/>`;
+    let s=`<rect width="540" height="300" fill="${inn?"#EFE9DC":C.grass}"/><rect x="0" y="${far}" width="540" height="${bank-far}" fill="${band}"/>`;
+    if(inn){for(let x=0;x<540;x+=30) s+=`<line x1="${x}" y1="${bank}" x2="${x}" y2="300" stroke="#DDD3C0" stroke-width="1"/>`;for(let y=bank+30;y<300;y+=30) s+=`<line x1="0" y1="${y}" x2="540" y2="${y}" stroke="#DDD3C0" stroke-width="1"/>`;}
     if(road) s+=`<line x1="0" y1="${(far+bank)/2}" x2="540" y2="${(far+bank)/2}" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>`;
     s+=`<line x1="0" y1="${far}" x2="540" y2="${far}" stroke="${C.ink}" stroke-width="1.4"/><line x1="0" y1="${bank}" x2="540" y2="${bank}" stroke="${C.ink}" stroke-width="1.4"/>`;
-    s+=txt(420,72,cut(sc.o)+"（不可進入）",road?C.ink2:C.blue,"middle",12,band);
+    s+=txt(420,72,cut(sc.o)+(inn?"（使用中，不可穿越）":"（不可進入）"),road||inn?C.ink2:C.blue,"middle",12,band);
     if(hl) s+=`<polygon points="${P(...A)} ${P(...B)} ${P(...Cp)}" fill="${C.blueSoft}" opacity=".9"/><polygon points="${P(...Cp)} ${P(...D)} ${P(...E)}" fill="${C.goldSoft}"/>`;
     s+=`<rect x="${B[0]-14}" y="${B[1]-26}" width="28" height="22" fill="${C.conc}" stroke="${C.ink}" stroke-width="1.2"/><polygon points="${P(B[0]-19,B[1]-26)} ${P(B[0],B[1]-40)} ${P(B[0]+19,B[1]-26)}" fill="${C.gold}"/><rect x="${B[0]-4}" y="${B[1]-14}" width="8" height="10" fill="${C.ink2}"/>`;
     s+=`<line x1="${B[0]}" y1="${B[1]}" x2="${E[0]}" y2="${E[1]}" stroke="${C.sun}" stroke-width="2" stroke-dasharray="7 5"/>`;
@@ -711,8 +713,82 @@ const TASKS=[
     return s;}
  }
 ];
-const TK=id=>TASKS.find(t=>t.id===id);
-function scOf(id){const task=TK(id),t=S.tasks[id],i=+(t.scene||0);if(i<task.scenes.length)return task.scenes[i];return {n:"自訂",t:(t.cT||"").trim()||"你選的建築物",o:(t.cO||"").trim()||"障礙區",x:""};}
+/* ---------- indoor variants（室內測量） ---------- */
+TASKS[0].envNote={out:"晴天在戶外量影子。下雨或不方便外出時，可以改選「室內」。",in:"室內沒有陽光投下的影子，改用「鏡子反射」造出相似三角形。"};
+TASKS[0].indoor={tag:"室內：鏡子反射",blurb:"室內改用鏡子反射，量出高處的高度。",
+  unknown:{sym:"H",name:"室內高處的高度"},
+  scenes:[{n:"體育館籃框",t:"體育館的籃框",x:"籃框正下方的地面點，就是籃框邊緣垂直往下的位置。",in:true},
+          {n:"禮堂／大廳天花板",t:"禮堂的天花板",x:"選天花板上一個清楚的記號（燈具邊緣或接縫），先找到它正下方的地面點。",in:true},
+          {n:"樓梯間挑高",t:"樓梯間挑高的天花板",x:"樓梯間地面要平坦；人和鏡子都放在同一層地面上。",in:true},
+          {n:"高書櫃或展示牆",t:"圖書館的高書櫃",x:"不要爬上書櫃，也不要移動書櫃。",in:true},
+          {n:"教室天花板",t:"教室的天花板",x:"教室天花板不高，適合第一次練習；完成後可以用捲尺貼牆驗證。",in:true}],
+  customPh:"例：活動中心的舞台布幕上緣",
+  text:sc=>`${sc.t}在室內，沒有陽光可以投下影子，也不能爬上去拉捲尺。你們有一面小鏡子（或關掉的手機黑色螢幕）、一捲捲尺、膠帶和水平儀。把鏡子平放在地上，一位組員站直、慢慢往後退，直到從鏡子中心剛好看到${sc.t}的最高點。${sc.x||""}`,
+  conds:["鏡子平放在水平地面上（水平儀氣泡置中），用鏡子中心當作反射點 M。","光線反射時，入射角＝反射角：眼睛看鏡子的角度，和最高點照到鏡子的角度相等。","觀測者站直、腳跟對齊，眼睛高度 h 從地面量到眼睛。","s：觀測者腳跟（眼睛正下方）到鏡子中心的水平距離。","S：鏡子中心到最高點正下方地面點的水平距離。","觀測者、鏡子中心、最高點正下方三點在同一直線上；目標垂直於地面。"],
+  chips:["眼睛高度 h","人到鏡子的距離 s","鏡子到目標正下方的距離 S","目標高度 H","鏡子的大小","燈光的亮度"],
+  fields:[["h","眼睛高","h","例：1.55"],["s","人到鏡子","s","例：1.20"],["S","鏡子到目標正下方","S","例：6.80"]],
+  formula:"H ＝ h × S ÷ s", resultName:"目標高度 H",
+  hints:["鏡子平放時，入射角＝反射角，所以「眼睛—鏡子」和「最高點—鏡子」這兩條視線與地面的夾角相等。人和目標都垂直地面，會圍出哪兩個三角形？",
+         "兩個三角形都有直角，鏡子兩側的夾角又相等——圖中已標出。它們符合哪一個相似性質？",
+         "相似三角形的對應邊成比例。把「高」對「高」、「到鏡子的距離」對「到鏡子的距離」寫成比例式：＿＿ ：＿＿ ＝ ＿＿ ：＿＿"],
+  ph:{obs:"例：地板上的距離可以用捲尺量，但籃框太高、爬不上去，室內也沒有陽光影子……",link:"例：泰勒斯用影子，我們用鏡子；都是用一個量得到的小三角形，推出量不到的大三角形……",
+      target:"例：體育館籃框的高度",estWhy:"例：籃框大約是兩個人疊起來的高度……",q_measure:"例：量得到眼睛高度、人到鏡子、鏡子到籃框正下方；量不到籃框高……",
+      q_why:"例：因為入射角＝反射角，兩個三角形的角相等，所以……",q_missing:"例：鏡子沒放平怎麼辦？籃框正下方的點要怎麼找？",
+      steps:"1. 小明把鏡子平放，用水平儀確認\n2. 小華站直往後退，看到籃框邊緣就停\n3. 小美量 s、S 和小華的眼睛高度\n4. ……",
+      err:"例：鏡子有厚度、眼睛位置不好確定、人沒有站直……",limits:"例：地面不平時鏡子會歪；目標太高時鏡子要離很遠……"},
+  svg(hl){
+    const G=250,bx=110,bt=70,mx=320,px=430,ey=G-(px-mx)*(G-bt)/(mx-bx);
+    let s=`<rect width="540" height="300" fill="#F4EEE2"/><rect x="0" y="${G}" width="540" height="50" fill="#E7D7B5"/>`;
+    for(let x=0;x<540;x+=36) s+=`<line x1="${x}" y1="${G}" x2="${x}" y2="300" stroke="#D6C29A" stroke-width="1"/>`;
+    s+=`<line x1="0" y1="26" x2="540" y2="26" stroke="${C.ink}" stroke-width="1.4"/>`+txt(500,16,"天花板",C.muted,"end",11);
+    if(hl){s+=`<polygon points="${P(bx,bt)} ${P(bx,G)} ${P(mx,G)}" fill="${C.blueSoft}"/><polygon points="${P(px,ey)} ${P(px,G)} ${P(mx,G)}" fill="${C.goldSoft}"/>`;}
+    s+=`<line x1="${bx}" y1="${bt}" x2="${bx}" y2="${G}" stroke="${C.ink}" stroke-width="2"/><rect x="${bx-6}" y="${bt-6}" width="46" height="8" fill="${C.red}" opacity=".85"/><rect x="${bx-26}" y="${bt-40}" width="28" height="40" fill="none" stroke="${C.ink}" stroke-width="1.3"/>`;
+    s+=`<circle cx="${bx}" cy="${bt}" r="3.5" fill="${C.red}"/>`+txt(bx+44,bt-14,"最高點",C.red,"start",12,"#F4EEE2");
+    s+=`<line x1="0" y1="${G}" x2="540" y2="${G}" stroke="${C.ink}" stroke-width="1.6"/>`;
+    s+=`<line x1="${bx}" y1="${bt}" x2="${mx}" y2="${G}" stroke="${C.sun}" stroke-width="2" stroke-dasharray="7 5"/><line x1="${mx}" y1="${G}" x2="${px}" y2="${ey}" stroke="${C.sun}" stroke-width="2" stroke-dasharray="7 5"/>`;
+    s+=chevron(bx,bt,mx,G,.55,C.gold)+chevron(mx,G,px,ey,.55,C.gold);
+    s+=`<rect x="${mx-18}" y="${G-4}" width="36" height="5" rx="1.5" fill="#BFD4E6" stroke="${C.ink}" stroke-width="1"/>`+txt(mx,G+40,"鏡子 M（平放）",C.ink2,"middle",12);
+    const hx=px+16; s+=`<circle cx="${hx}" cy="${ey-2}" r="10" fill="none" stroke="${C.ink}" stroke-width="1.6"/><line x1="${hx}" y1="${ey+8}" x2="${hx}" y2="${G-42}" stroke="${C.ink}" stroke-width="1.8"/><line x1="${hx}" y1="${G-42}" x2="${hx-8}" y2="${G}" stroke="${C.ink}" stroke-width="1.8"/><line x1="${hx}" y1="${G-42}" x2="${hx+8}" y2="${G}" stroke="${C.ink}" stroke-width="1.8"/><line x1="${hx}" y1="${ey+22}" x2="${hx-12}" y2="${ey+44}" stroke="${C.ink}" stroke-width="1.6"/>`;
+    s+=`<line x1="${px}" y1="${ey}" x2="${px}" y2="${G}" stroke="${C.red}" stroke-width="3"/><circle cx="${px}" cy="${ey}" r="3" fill="${C.red}"/>`+txt(px-8,(ey+G)/2,"眼睛高 h",C.red,"end",12,"#F4EEE2");
+    s+=rightMark(bx,G,0,-1,1,0)+rightMark(px,G,0,-1,-1,0);
+    if(hl){const a=Math.atan2(G-bt,mx-bx)*180/Math.PI; s+=arc(mx,G,26,180,180+a,C.blue)+arc(mx,G,22,-a,0,C.gold)+txt(mx-38,G-12,"θ",C.blue,"middle",14)+txt(mx+34,G-10,"θ",C.gold,"middle",13);}
+    s+=txt(bx-30,(bt+G)/2+20,"H＝?",C.red,"end",15,"#F4EEE2");
+    s+=dim(bx,G+20,mx,G+20,"S",C.ink2,0)+dim(mx,G+20,px,G+20,"s",C.ink2,0);
+    s+=txt(20,288,"人、鏡子、最高點正下方在同一直線上",C.muted,"start",11);
+    return s;}
+};
+TASKS[1].envNote={out:"戶外的無障礙坡道或步道。下雨時可以改選「室內」。",in:"室內的坡道或樓梯也能用同一個方法：水平尺＋垂直落差。"};
+TASKS[1].indoor={tag:"室內坡道／樓梯",blurb:"在校舍裡找坡道或樓梯，用相似求出高度。",
+  unknown:{sym:"H",name:"樓層或平台高度"},
+  scenes:[{n:"校內室內坡道",t:"校舍走廊的無障礙坡道",in:true},
+          {n:"禮堂斜坡走道",t:"禮堂座位區的斜坡走道",x:"斜坡走道要選中途沒有轉折、坡度一致的一段。",in:true},
+          {n:"樓梯（量一層樓高）",t:"樓梯",x:"樓梯不是平滑斜面：把每一階的深度當作水平尺長 r、每一階的高度當作垂直落差 v（每一階都一樣），X 是整段樓梯的水平長度。",in:true},
+          {n:"活動中心舞台斜坡",t:"活動中心的舞台斜坡",in:true}],
+  customPh:"例：圖書館二樓的閱覽平台斜坡",
+  text:sc=>`${sc.t}通往較高的樓層或平台。平台下方是牆面、儲藏空間或座位，無法站到平台正下方拉捲尺量高度；但可以沿著旁邊的水平地面量出坡道（或樓梯）的水平長度 X。你們有一支 1 公尺直尺、水平儀（或手機水平儀）和捲尺。${sc.x||""}`,
+  conds:["坡面（或樓梯每一階前緣的連線）是平直的，整段坡度相同，中途沒有轉折平台。","直尺一端 P 貼在坡面上，直尺保持水平（水平儀氣泡置中），水平尺長記為 r。","從直尺另一端 T 垂直往下量到坡面 U，垂直落差記為 v（TU 垂直地面）。樓梯可直接用一階的深度當 r、一階的高度當 v。","坡道水平長 X＝坡底 A 到平台邊緣正下方 C 的水平距離，沿旁邊的水平地面測量。","平台邊緣 BC 垂直於地面；室內走廊有人通行時，要留出通道。"],
+  chips:["坡道（樓梯）水平長 X","水平尺長 r（一階深度）","垂直落差 v（一階高度）","坡道斜面長","樓層或平台高度 H","扶手高度"],
+  ph:{obs:"例：走廊地面的長度量得到，但樓梯平台下方是牆，無法直接量高度……",target:"例：一樓到二樓的樓層高度",estWhy:"例：一層樓大約 3 公尺……",
+      steps:"1. 小明數階數，量每一階的深度和高度\n2. 小華沿著旁邊的地面量出整段樓梯的水平長\n3. ……"},
+};
+TASKS[2].envNote={out:"戶外的河岸、馬路或湖邊。下雨時可以改選「室內」。",in:"室內也有「走不過去」的地方：上課中的球場、天井、座位區。"};
+TASKS[2].indoor={tag:"室內：特定視角",blurb:"在室內用直角和三點對準，量出走不過去的距離。",
+  unknown:{sym:"AB",name:"到對面的距離"},
+  scenes:[{n:"體育館球場對面",t:"牆邊的柱子",o:"球場",x:"球場正在上課或比賽，全程沿著場邊操作，不可進入場內。",in:true},
+          {n:"中庭天井對面",t:"一根柱子",o:"天井",x:"只在走廊上操作，不可把身體探出欄杆。",in:true},
+          {n:"禮堂舞台",t:"舞台邊緣",o:"座位區",x:"座位區擋住去路，沿著走道操作。",in:true},
+          {n:"圖書館閱覽區另一端",t:"一排書櫃",o:"閱覽區",x:"保持安靜，不打擾正在閱讀的人。",in:true}],
+  customPh:"例：穿堂另一側的公布欄", obsPh:"例：正在上課的教室",
+  text:sc=>`室內的${sc.o}對面有${sc.t}（B 點）。${sc.o}正在使用中，你們不能穿越，也無法直接把捲尺拉過去，但想知道從這一側到${sc.t}的距離 AB。你們有兩支標竿（可用三角錐或水瓶代替）、捲尺、膠帶，以及可以量直角的三角板。${sc.x||""}`,
+  conds:["觀測起點 A 選在目標 B 的正對面：用三角板對齊，使 AB 垂直你們這一側的直線（地磚縫、球場邊線或牆邊）。","沿著這條直線從 A 走到 C，在 C 立一支標竿（或三角錐）；再沿同方向走到 D。用膠帶在地上標出各點。","在 D 轉 90° 離開直線前進（DE 垂直 AD），可以沿著地磚縫走。","在 E 點蹲低目視：當標竿 C 剛好擋住目標 B（E、C、B 三點共線）就停下，E 即觀測點。","A、C、D 在同一直線上，地面水平；全程不進入使用中的區域。"],
+  ph:{obs:"例：走廊上的距離量得到，但球場正在上課，不能走過去量對面的距離……",target:"例：從場邊到球場對面柱子的距離",estWhy:"例：一塊地磚 60 公分，對面大約有 40 塊地磚……",
+      steps:"1. 小明用三角板找到 A，用膠帶貼在地上\n2. 小華沿著地磚縫走到 C 放三角錐\n3. ……"},
+};
+const TKB=id=>TASKS.find(t=>t.id===id);
+const TK=id=>{const b=TKB(id),t=(typeof S!=="undefined"&&S&&S.tasks)?S.tasks[id]:null;return (t&&t.env==="in"&&b.indoor)?Object.assign({},b,b.indoor,{base:b}):b;};
+const TKS=()=>TASKS.map(x=>TK(x.id));
+const envOf=id=>S.tasks[id].env==="in"?"in":"out";
+function scOf(id){const task=TK(id),t=S.tasks[id],i=+(t.scene||0);if(i<task.scenes.length)return task.scenes[i];const inn=t.env==="in";return {n:"自訂",t:(t.cT||"").trim()||(inn?"你選的目標":"你選的建築物"),o:(t.cO||"").trim()||(inn?"中間區域":"障礙區"),x:"",in:inn};}
 const sceneText=id=>TK(id).text(scOf(id));
 
 /* ---------- state ---------- */
@@ -766,7 +842,7 @@ function renderFlow(){
   $$("#flow button").forEach(b=>b.addEventListener("click",()=>{setPhase(+b.dataset.phase);scrollToEl("#workspace");}));
 }
 function renderCards(){
-  $("#taskCards").innerHTML=TASKS.map(t=>{const d=doneCount(t.id);return `<button type="button" class="tcard${S.cur===t.id?" on":""}" data-task="${t.id}" aria-pressed="${S.cur===t.id}">
+  $("#taskCards").innerHTML=TKS().map(t=>{const d=doneCount(t.id);return `<button type="button" class="tcard${S.cur===t.id?" on":""}" data-task="${t.id}" aria-pressed="${S.cur===t.id}">
     <span class="top"><span class="n">${t.no}</span><span class="h3">${t.title}</span><span class="go" aria-hidden="true">›</span></span>
     <span class="ph"><img src="${t.img}" alt=""><span class="tag">${t.tag}</span></span>
     <span class="desc">${t.blurb}</span>
@@ -791,42 +867,47 @@ function renderBoard(){
   const task=TK(S.cur),t=T(),hl=t.hints>=2;
   $("#board").innerHTML=`<svg viewBox="0 0 540 300" role="img" aria-label="${task.title}精確示意圖">${task.svg(hl,scOf(S.cur))}</svg>
     ${hl?`<div class="legend"><span><i style="background:${C.blueSoft}"></i>大三角形</span><span><i style="background:${C.goldSoft}"></i>小三角形</span><span>相同顏色的角相等</span></div>`:""}
-    <div><h3 style="font-size:1rem;margin-bottom:6px">測量條件（一定要做到）</h3><ol class="conds">${task.conds.map(c=>`<li>${c}</li>`).join("")}</ol><p class="help" style="margin-top:6px">安全提醒：只在公共空間測量，不進入私人土地、車道或水域；古蹟不攀爬、不觸碰。</p></div>
+    <div><h3 style="font-size:1rem;margin-bottom:6px">測量條件（一定要做到）</h3><ol class="conds">${task.conds.map(c=>`<li>${c}</li>`).join("")}</ol><p class="help" style="margin-top:6px">${envOf(S.cur)==="in"?"安全提醒：先徵得老師或場館管理者同意；不妨礙上課與通行，不攀爬、不移動設備，鏡子用完立刻收起。":"安全提醒：只在公共空間測量，不進入私人土地、車道或水域；古蹟不攀爬、不觸碰。"}</p></div>
     <div class="hints" id="hints">${task.hints.slice(0,t.hints).map((h,i)=>`<div class="hint"><b>提示 ${i+1}</b>${h}</div>`).join("")}</div>
     <div class="row"><button class="btn gold sm" type="button" id="hintBtn" ${t.hints>=3?"disabled":""}>${t.hints>=3?"提示已全部打開":`卡住了？看提示 ${t.hints+1} / 3`}</button><span class="help">先討論，真的卡住再打開。</span></div>`;
   $("#hintBtn").addEventListener("click",()=>{if(T().hints<3){T().hints++;logEv("hint",{n:T().hints});renderBoard();save();}});
 }
+const PH=(k,d)=>{const tk=TK(S.cur);return (tk.ph&&tk.ph[k])||d;};
 const F=(k,ph,rows=3)=>`<textarea id="w_${k}" data-f="${k}" rows="${rows}" placeholder="${esc(ph)}"></textarea>`;
 function renderWork(){
   const task=TK(S.cur),t=T(),w=$("#work");
   let h="";
   if(t.phase===0){
     const si=+(t.scene||0), isC=si===task.scenes.length;
+    const inn=envOf(S.cur)==="in", base=TKB(S.cur);
     h=`<h3>01 情境探索</h3>
-      <div><div style="font-weight:500;font-size:.9rem;margin-bottom:6px">選擇你們的測量對象 <span class="help">任何建築都可以，也能自訂</span></div>
+      <div><div style="font-weight:500;font-size:.9rem;margin-bottom:6px">測量場地</div>
+        <div class="chips" role="radiogroup" aria-label="測量場地"><label><input type="radio" name="env" value="out" ${inn?"":"checked"}>戶外</label><label><input type="radio" name="env" value="in" ${inn?"checked":""}>室內</label></div>
+        <p class="help" style="margin-top:6px">${esc(base.envNote[inn?"in":"out"])}</p></div>
+      <div><div style="font-weight:500;font-size:.9rem;margin-bottom:6px">選擇你們的測量對象 <span class="help">${inn?"校舍、體育館、禮堂、圖書館都可以，也能自訂":"任何建築都可以，也能自訂"}</span></div>
         <div class="chips" role="radiogroup" aria-label="測量對象">${task.scenes.map((c,i)=>`<label><input type="radio" name="scene" id="sc_${i}" value="${i}" ${si===i?"checked":""}>${c.n}</label>`).join("")}<label><input type="radio" name="scene" id="sc_c" value="${task.scenes.length}" ${isC?"checked":""}>自訂</label></div></div>
-      ${isC?`<div class="grid2"><label class="f">${task.id==="view"?"對面的目標":"建築物名稱"}<input type="text" id="w_cT" data-sc="cT" value="${esc(t.cT||"")}" placeholder="${esc(task.customPh)}"></label>${task.id==="view"?`<label class="f">中間的障礙<input type="text" id="w_cO" data-sc="cO" value="${esc(t.cO||"")}" placeholder="${esc(task.obsPh)}"></label>`:""}</div>`:""}
+      ${isC?`<div class="grid2"><label class="f">${task.id==="view"?"對面的目標":(inn?"室內目標名稱":"建築物名稱")}<input type="text" id="w_cT" data-sc="cT" value="${esc(t.cT||"")}" placeholder="${esc(task.customPh)}"></label>${task.id==="view"?`<label class="f">${inn?"中間不能穿越的區域":"中間的障礙"}<input type="text" id="w_cO" data-sc="cO" value="${esc(t.cO||"")}" placeholder="${esc(task.obsPh)}"></label>`:""}</div>`:""}
       <p id="sceneTxt">${esc(sceneText(S.cur))}</p>
       <p class="help">還沒玩過泰勒斯模擬器？<button class="link" type="button" id="toThales">回到故事起點 →</button></p>
-      <label class="f">觀察情境：哪些東西量得到、哪些量不到？<small>用自己的話描述</small>${F("obs","例：地面上的長度可以用捲尺量，但建築物的高度爬不上去、對面也走不過去……")}</label>
-      <label class="f">這個情境和泰勒斯的故事有哪裡相同？${F("link","例：都有一個量得到的小物體，和一個量不到的大物體……")}</label>`;
+      <label class="f">觀察情境：哪些東西量得到、哪些量不到？<small>用自己的話描述</small>${F("obs",PH("obs","例：地面上的長度可以用捲尺量，但建築物的高度爬不上去、對面也走不過去……"))}</label>
+      <label class="f">這個情境和泰勒斯的故事有哪裡相同？${F("link",PH("link","例：都有一個量得到的小物體，和一個量不到的大物體……"))}</label>`;
   } else if(t.phase===1){
     h=`<h3>02 提出猜想</h3>
       <div class="grid2">
-        <label class="f">我們想測量什麼？<small>寫出目標與它的名稱</small><input type="text" id="w_target" data-f="target" placeholder="例：廟宇屋脊的高度"></label>
+        <label class="f">我們想測量什麼？<small>寫出目標與它的名稱</small><input type="text" id="w_target" data-f="target" placeholder="${esc(PH("target","例：廟宇屋脊的高度"))}"></label>
         <label class="f">先猜一個數值<small>用估的，不用算</small><span class="unit"><input type="number" step="any" inputmode="decimal" id="w_est" data-f="est" placeholder="例：14"><span>公尺</span></span></label>
       </div>
-      <label class="f">估計的依據${F("estWhy","例：一層樓大約 3 公尺，它大約有五層樓高……",2)}</label>
+      <label class="f">估計的依據${F("estWhy",PH("estWhy","例：一層樓大約 3 公尺，它大約有五層樓高……"),2)}</label>
       <div><div style="font-weight:500;font-size:.9rem;margin-bottom:6px">你們能直接量到哪些資料？（勾選）</div>
         <div class="chips">${task.chips.map((c,i)=>`<label><input type="checkbox" id="chip_${i}" data-chip="${esc(c)}" ${t.chips.includes(c)?"checked":""}>${c}</label>`).join("")}</div></div>
       <div class="discuss" id="discuss"><span class="lab">小組討論</span>
-        <label class="f">能量到什麼？量不到什麼？${F("q_measure","例：量得到標竿高、兩個影長；量不到建築物的高……")}</label>
-        <label class="f">為什麼能建立比例？哪些條件要相同？${F("q_why","例：因為同一時刻陽光平行，所以……")}</label>
-        <label class="f">還缺哪些條件或資料？${F("q_missing","例：影尖不清楚時怎麼辦？地面是不是水平？")}</label>
+        <label class="f">能量到什麼？量不到什麼？${F("q_measure",PH("q_measure","例：量得到標竿高、兩個影長；量不到建築物的高……"))}</label>
+        <label class="f">為什麼能建立比例？哪些條件要相同？${F("q_why",PH("q_why","例：因為同一時刻陽光平行，所以……"))}</label>
+        <label class="f">還缺哪些條件或資料？${F("q_missing",PH("q_missing","例：影尖不清楚時怎麼辦？地面是不是水平？"))}</label>
       </div>`;
   } else if(t.phase===2){
     h=`<h3>03 設計測量</h3>
-      <label class="f">測量步驟與分工<small>依順序寫，讓別組也能照著做</small>${F("steps","1. 小明立標竿，確認垂直\n2. 小華在同一時刻用粉筆標出兩個影尖\n3. ……",4)}</label>
+      <label class="f">測量步驟與分工<small>依順序寫，讓別組也能照著做</small>${F("steps",PH("steps","1. 小明立標竿，確認垂直\n2. 小華在同一時刻用粉筆標出兩個影尖\n3. ……"),4)}</label>
       <div><div style="font-weight:500;font-size:.9rem;margin-bottom:6px">繪製示意圖 <span class="help">標出量得到的長度與未知量</span></div>
         <div class="pad-tools" style="margin-bottom:8px">
           <button type="button" class="sw on" data-col="${C.ink}" style="background:${C.ink}" aria-label="深藍筆"></button>
@@ -859,8 +940,8 @@ function renderWork(){
       </div>
       <p class="help" id="cmpTxt"></p>
       <div class="discuss"><span class="lab">小組討論</span>
-        <label class="f">誤差從哪裡來？${F("err","例：影尖邊緣模糊、兩個影子沒有同時量……")}</label>
-        <label class="f">這個方法在什麼條件下才適用？什麼情況會失效？${F("limits","例：陰天沒有影子；地面有坡度時……")}</label>
+        <label class="f">誤差從哪裡來？${F("err",PH("err","例：影尖邊緣模糊、兩個影子沒有同時量……"))}</label>
+        <label class="f">這個方法在什麼條件下才適用？什麼情況會失效？${F("limits",PH("limits","例：陰天沒有影子；地面有坡度時……"))}</label>
         <label class="f">一句話分享我們的發現${F("share","例：只要找到兩個相似三角形，就能用小的量出大的。",2)}</label>
       </div>`;
   }
@@ -868,6 +949,7 @@ function renderWork(){
   w.innerHTML=h;
   $$("#work [data-f]").forEach(el=>{const k=el.dataset.f; if(t.f[k]!=null) el.value=t.f[k]; el.addEventListener("input",()=>{t.f[k]=el.value; logEv("edit",{f:k,len:[...el.value.replace(/\s/g,"")].length}); if(k==="other"||k==="my") updateCompare(); if(k==="my"&&t.verified) showVerify(); save();});});
   $$("#work [data-chip]").forEach(cb=>cb.addEventListener("change",()=>{const c=cb.dataset.chip;t.chips=t.chips.filter(x=>x!==c);if(cb.checked)t.chips.push(c);logEv("chip",{f:"chips",c:t.chips.length});save();}));
+  $$("#work input[name=env]").forEach(r=>r.addEventListener("change",()=>{t.env=r.value;t.scene=0;t.chips=[];logEv("env",{s:r.value==="in"?"室內":"戶外"});renderAllTask();save();}));
   $$("#work input[name=scene]").forEach(r=>r.addEventListener("change",()=>{t.scene=+r.value;logEv("scene",{s:scOf(S.cur).n});renderBoard();renderWork();save();}));
   $$("#work [data-sc]").forEach(el=>el.addEventListener("input",()=>{t[el.dataset.sc]=el.value;logEv("edit",{f:el.dataset.sc});$("#sceneTxt").textContent=sceneText(S.cur);renderBoard();save();}));
   const tb=$("#toThales"); if(tb) tb.addEventListener("click",()=>scrollToEl("#thales"));
@@ -959,7 +1041,7 @@ $$("[data-g]").forEach(el=>{const k=el.dataset.g;if(S.thales[k])el.value=S.thale
 
 /* ---------- gallery ---------- */
 function renderGallery(){
-  $("#gal").innerHTML=TASKS.map(task=>{const t=S.tasks[task.id],avg=avgVal(task.id),d=doneCount(task.id);
+  $("#gal").innerHTML=TKS().map(task=>{const t=S.tasks[task.id],avg=avgVal(task.id),d=doneCount(task.id);
     let sk=`<span>尚未繪製示意圖</span>`; if(t.strokes.length){sk=`<img alt="${task.title}小組示意圖" src="${sketchCanvas(t.strokes,480,269).toDataURL("image/png")}">`;}
     return `<article class="gcard"><div class="row" style="justify-content:space-between"><h3>${task.no}　${task.title}</h3><span class="help">${d} / 4 階段</span></div>
       <span class="prog">${[0,1,2,3].map(i=>`<i class="${phaseDone(task.id,i)?"d":""}"></i>`).join("")}</span>
@@ -1000,7 +1082,7 @@ function evText(e){const d=e.d||{},n=e.n&&e.n>1?`（${e.n} 次）`:"";
   switch(e.k){case"open":return "開啟網頁";case"task":return `切換到任務「${CTX_NAME[d.id]||d.id}」`;case"phase":return `進入階段 0${(d.p??0)+1} ${PHASES[d.p]?PHASES[d.p][0]:""}`;
   case"hint":return `打開提示 ${d.n} / 3`;case"edit":return `編輯「${fName(d.f)}」${d.len!=null?`，目前 ${d.len} 字`:""}${n}`;case"paste":return `貼上 ${d.len} 字到「${fName(d.f)}」`;
   case"trial":return `輸入測量數據${n}`;case"known":return `填寫已知／未知量表${n}`;case"sketch":return `繪製示意圖${e.n?`（${e.n} 筆）`:""}`;case"chip":return `勾選可取得的資料${n}`;
-  case"scene":return `選擇測量對象：${d.s}`;case"verify":return `按下驗算：寫 ${d.my}，紀錄推算 ${d.avg}（差 ${d.diff}%）`;case"draft":return `使用「帶入草稿」：${fName(d.f)}`;
+  case"scene":return `選擇測量對象：${d.s}`;case"env":return `切換測量場地：${d.s}`;case"verify":return `按下驗算：寫 ${d.my}，紀錄推算 ${d.avg}（差 ${d.diff}%）`;case"draft":return `使用「帶入草稿」：${fName(d.f)}`;
   case"export":return `匯出${d.type}`;case"sim":return `操作泰勒斯模擬器${n}`;}return e.k;}
 function trailStats(st){
   const L=(st.log||[]).slice().sort((a,b)=>a.t-b.t), GAP=5*60*1000, per={}, days=new Set();let active=0,sessions=0,prevEnd=null;
@@ -1018,7 +1100,7 @@ const dt=t=>t?new Date(t).toLocaleString("zh-TW",{month:"2-digit",day:"2-digit",
 const chars=t=>[...String(t||"").replace(/\s/g,"")].length;
 const BASIS={shadow:"AA：兩個直角＋平行光的同位角",ramp:"AA：兩個直角＋水平尺與地面平行的同位角",view:"AA：兩個直角＋對頂角"};
 function taskStarted(id){const t=S.tasks[id];return Object.values(t.f).some(has)||t.strokes.length||t.hints||t.trials.some(r=>Object.values(r).some(has));}
-function coreRows(){return TASKS.map(task=>{const t=S.tasks[task.id],a=num(t.f.my),o=num(t.f.other);
+function coreRows(){return TKS().map(task=>{const t=S.tasks[task.id],a=num(t.f.my),o=num(t.f.other);
   return [`${task.no} ${task.title}`,scOf(task.id).t,BASIS[task.id],has(t.f.my)?`${t.f.my} 公尺`:"–",has(t.f.other)?`${t.f.other} 公尺（${t.f.otherSrc||"比較對象"}）`:"–",(!isNaN(a)&&!isNaN(o))?fmt(Math.abs(a-o)/((a+o)/2)*100,1)+"%":"–"];});}
 const PARTS=[
  ["pf1","壹、小組命名",()=>namingOK()&&has(S.report.nameWhy)&&has(S.group.members),()=>!namingOK()?"班級代碼、組別或組名格式未完成":(!has(S.report.nameWhy)?"還沒寫組名由來":(!has(S.group.members)?"還沒填組員":""))],
@@ -1146,7 +1228,7 @@ $("#btnDocx").addEventListener("click",async e=>{
     kids.push(table([["任務","測量對象","相似依據","我們的結果","比較結果","差異"],...coreRows()],[14,16,24,14,20,12]));
     kids.push(H2("三、各任務重點"));
     let any=false;
-    for(const task of TASKS){ if(!taskStarted(task.id)) continue; any=true; const t=S.tasks[task.id];
+    for(const task of TKS()){ if(!taskStarted(task.id)) continue; any=true; const t=S.tasks[task.id];
       kids.push(Pp(`${task.no} ${task.title}：${scOf(task.id).t}`,{b:true,c:BLUE}));
       try{kids.push(img(await svgToPng(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 300" width="1080" height="600">${task.svg(true,scOf(task.id))}</svg>`,1080,600),400,222));}catch(err){}
       kids.push(Pp("推理過程：",{b:true}),...paraG(t.f.reason,"相似理由、比例式與計算"));
@@ -1162,12 +1244,12 @@ $("#btnDocx").addEventListener("click",async e=>{
     kids.push(H1("附錄一　故事起點：泰勒斯的影子"));
     kids.push(Pp("我們的發現：",{b:true}));kids.push(...para(S.thales.obs));
     kids.push(Pp("一定要等到影長＝棍長嗎？",{b:true}));kids.push(...para(S.thales.q));
-    for(const task of TASKS){
+    for(const task of TKS()){
       const t=S.tasks[task.id]; const started=Object.values(t.f).some(has)||t.strokes.length||t.hints||t.trials.some(r=>Object.values(r).some(has));
-      if(!started){kids.push(H1(`附錄${APX[TASKS.indexOf(task)]}　任務 ${task.no}　${task.title}`));kids.push(Pp("此任務尚未進行。",{c:MUT}));continue;}
+      if(!started){kids.push(H1(`附錄${APX[TASKS.findIndex(z=>z.id===task.id)]}　任務 ${task.no}　${task.title}`));kids.push(Pp("此任務尚未進行。",{c:MUT}));continue;}
       kids.push(new Paragraph({children:[new PageBreak()]}));
-      kids.push(H1(`附錄${APX[TASKS.indexOf(task)]}　任務 ${task.no}　${task.title}`));
-      kids.push(Pp("測量對象："+scOf(task.id).t,{b:true}));kids.push(Pp(sceneText(task.id)));
+      kids.push(H1(`附錄${APX[TASKS.findIndex(z=>z.id===task.id)]}　任務 ${task.no}　${task.title}`));
+      kids.push(Pp("測量場地："+(envOf(task.id)==="in"?"室內（"+task.tag+"）":"戶外")+"　測量對象："+scOf(task.id).t,{b:true}));kids.push(Pp(sceneText(task.id)));
       kids.push(Pp("測量條件：",{b:true})); task.conds.forEach(c=>kids.push(new Paragraph({bullet:{level:0},children:[new TextRun(c)]})));
       kids.push(H2("01 情境探索")); kids.push(Pp("觀察：",{b:true}),...para(t.f.obs),Pp("與泰勒斯故事的關聯：",{b:true}),...para(t.f.link));
       kids.push(H2("02 提出猜想"));
@@ -1314,14 +1396,15 @@ function renderTrailList(){
     if(tfType!=="all"&&kindOf(x)!==tfType) return false;
     if(tfQ){const g=x.g||{};if(!`${g.klass||""} ${g.no||""} ${g.name||""} ${x.dev}`.toLowerCase().includes(tfQ))return false;}
     return true;}).sort((a,b)=>b.lt-a.lt);
-  const COLS=15;
+  const COLS=16;
   let body="",cur="";
   rows.forEach(({x,i,lt})=>{const k=dayKey(lt||0);
     if(k!==cur){cur=k;const n=rows.filter(r=>dayKey(r.lt||0)===k).length;body+=`<tr class="dhead"><td colspan="${COLS}">${lt?dayLabel(k):"沒有時間紀錄"}<span>${n} 台裝置</span></td></tr>`;}
     const s=x.ts,g=x.g||{};
-    body+=`<tr data-i="${i}" class="${trailSel===x.dev?"sel":""}" tabindex="0"><td>${KIND_TAG[kindOf(x)]}</td><td>${esc(g.klass||"未填")}</td><td>${esc(g.no||"")}</td><td>${esc(g.name||"未命名")}</td><td>${esc(x.dev)}</td><td>${lt?new Date(lt).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit",hour12:false}):"–"}</td><td>${s.days.length}</td><td>${s.sessions}</td><td>${mins(s.active)}</td><td>${s.progress!=null?s.progress+"%":"–"}</td><td>${s.hints}</td><td>${s.verify}</td><td class="${s.paste.length?"flag-p":""}">${s.paste.length}</td><td class="${s.draft?"flag-p":""}">${s.draft}</td><td>${TASKS.map(t=>s.tasks[t.id]??0).join(" / ")}</td></tr>`;});
+    body+=`<tr data-i="${i}" class="${trailSel===x.dev?"sel":""}" tabindex="0"><td>${KIND_TAG[kindOf(x)]}</td><td>${esc(g.klass||"未填")}</td><td>${esc(g.no||"")}</td><td>${esc(g.name||"未命名")}</td><td>${esc(x.dev)}</td><td>${lt?new Date(lt).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit",hour12:false}):"–"}</td><td>${s.days.length}</td><td>${s.sessions}</td><td>${mins(s.active)}</td><td>${s.progress!=null?s.progress+"%":"–"}</td><td>${s.hints}</td><td>${s.verify}</td><td class="${s.paste.length?"flag-p":""}">${s.paste.length}</td><td class="${s.draft?"flag-p":""}">${s.draft}</td><td>${TASKS.map(t=>s.tasks[t.id]??0).join(" / ")}</td><td>${x.snap?`<button class="btn sm pv" type="button" data-pv="${i}">預覽</button>`:`<span class="help">—</span>`}</td></tr>`;});
   if(!rows.length) body=`<tr class="dhead"><td colspan="${COLS}" style="color:var(--muted);font-weight:400">沒有符合篩選條件的紀錄。</td></tr>`;
-  el.innerHTML=`<thead><tr><th>類型</th><th>班級</th><th>組別</th><th>組名</th><th>裝置</th><th>最後活動</th><th>天數</th><th>階段數</th><th>投入時間</th><th>完成度</th><th>提示</th><th>驗算</th><th>貼上≥20字</th><th>帶入草稿</th><th>任務階段</th></tr></thead><tbody>${body}</tbody>`;
+  el.innerHTML=`<thead><tr><th>類型</th><th>班級</th><th>組別</th><th>組名</th><th>裝置</th><th>最後活動</th><th>天數</th><th>階段數</th><th>投入時間</th><th>完成度</th><th>提示</th><th>驗算</th><th>貼上≥20字</th><th>帶入草稿</th><th>任務階段</th><th>學生畫面</th></tr></thead><tbody>${body}</tbody>`;
+  $$("#trailList .pv").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const x=trailSubs[+b.dataset.pv];trailSel=x.dev;renderTrailList();openStudentView(x);}));
   $$("#trailList tbody tr[data-i]").forEach(tr=>{const go=()=>{trailSel=trailSubs[+tr.dataset.i].dev;renderTrailList();$("#trailDetail").scrollIntoView({behavior:"smooth",block:"start"});};tr.addEventListener("click",go);tr.addEventListener("keydown",e=>{if(e.key==="Enter")go();});});
   renderTrailDetail();
 }
@@ -1333,10 +1416,10 @@ function renderTrailDetail(){
     return h+`<li class="k-${esc(e.k)}"><time>${tm}</time><span class="ctx">${esc(e.ctx)}</span>${esc(e.text)}</li>`;}).join("");
   const ctxs=["故事起點",...TASKS.map(t=>t.title),"學習歷程"];
   box.innerHTML=`<div class="panel"><h3>${esc(g.klass||"")} 第 ${esc(g.no||"")} 組　${esc(g.name||"未命名")}　<span class="help">裝置 ${esc(x.dev)}</span></h3>
-    <p style="margin:4px 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">${x.snap?`<button class="btn sm" type="button" id="trailOpenView">開啟這組的填寫畫面</button>`:""}<span class="help" id="trailViewMsg">${x.snap?"用學生看到的版面檢視所有填寫內容，可直接匯出這組的 Word。":"這台裝置還沒有同步過填寫內容，只有軌跡。"}</span></p>
+    <p style="margin:4px 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">${x.snap?`<button class="btn blue" type="button" id="trailOpenView">預覽這組的填寫畫面</button>`:""}<span class="help" id="trailViewMsg">${x.snap?"直接看到學生在每一格寫了什麼（和學生看到的畫面一樣），也可以匯出這組的 Word。":"這台裝置還沒有同步過填寫內容，只有軌跡。"}</span></p>
     <div class="tbl"><table class="trail-tbl" style="min-width:480px"><thead><tr><th>區塊</th><th>投入時間</th><th>提示</th><th>階段完成</th></tr></thead><tbody>${ctxs.map(c=>{const t=TASKS.find(z=>z.title===c);return `<tr style="cursor:default"><td>${c}</td><td>${mins(s.per[c]||0)}</td><td>${t?(s.taskHints[t.id]||0)+" / 3":"—"}</td><td>${t?(s.tasks[t.id]||0)+" / 4":"—"}</td></tr>`;}).join("")}</tbody></table></div>
     ${s.paste.length?`<p class="flag-p" style="font-size:.88rem">有 ${s.paste.length} 次貼上 20 字以上的內容：${s.paste.map(e=>`${esc(fName(e.d.f))}（${e.d.len} 字，${dt(e.t)}）`).join("、")}。建議與學生確認來源。</p>`:""}
-    <h3 style="font-size:1rem;margin-top:6px">完整軌跡（共 ${s.L.length} 筆，最新在上）</h3><ul class="tl">${items||"<li>尚無軌跡。</li>"}</ul></div>`;
+    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:700">操作時間紀錄（共 ${s.L.length} 筆，最新在上）</summary><ul class="tl">${items||"<li>尚無軌跡。</li>"}</ul></details></div>`;
   const ob=$("#trailOpenView"); if(ob) ob.addEventListener("click",()=>openStudentView(x));
 }
 async function openStudentView(x){
@@ -1345,7 +1428,8 @@ async function openStudentView(x){
     const r=await fetch(CLOUD+(CLOUD.includes("?")?"&":"?")+"key="+encodeURIComponent(tPwMem)+"&dev="+encodeURIComponent(x.dev)+"&t="+Date.now());
     const j=await r.json();
     if(!j.ok){msg.textContent=j.error==="key"?"教師金鑰不一致。":"讀取失敗："+(j.error||"");return;}
-    if(!j.state){msg.textContent="試算表沒有這台裝置的完整內容。若剛更新 Code.gs，請確認已「部署新版本」。";return;}
+    if(!("state" in j)){msg.textContent="Google Apps Script 還是舊版，請貼上新的 Code.gs 並「部署 → 管理部署作業 → 編輯 → 新版本」。";toast("Apps Script 尚未更新");return;}
+    if(!j.state){msg.textContent="試算表還沒有這組的完整內容，請學生用新版網頁打開一次（會自動同步）。";return;}
     let st; try{st=JSON.parse(j.state);}catch(e){msg.textContent="這組內容太長，超過試算表單格上限而被截斷，請改看試算表各欄位或請學生匯出 Word。";return;}
     const g=x.g||{}, when=x.snap&&x.snap.updated?new Date(x.snap.updated).toLocaleString("zh-TW",{hour12:false}):"";
     $("#trailView").hidden=true;
