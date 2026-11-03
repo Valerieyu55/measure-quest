@@ -253,8 +253,14 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);bo
 .t-btn{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ink2);font-size:.88rem;padding:8px 10px;border-radius:999px}
 .t-btn:hover{background:var(--card)}
 .t-btn.on{color:var(--blue-deep);font-weight:700}
-.tp-actions{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.tguide{margin-top:12px;background:var(--paper);border-radius:6px;padding:10px 14px;font-size:.88rem}
+.bk-tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.bk-tabs button{font:inherit;font-weight:700;font-size:.95rem;background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;color:var(--muted);cursor:pointer}
+.bk-tabs button.on{color:var(--ink);border-bottom-color:var(--blue)}
+.bk-pane{display:flex;flex-direction:column;gap:14px}.bk-pane[hidden]{display:none}
+.bk-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.bk-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.bk-card h3{font-size:1.05rem}
+.tguide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;font-size:.95rem;line-height:1.8}
 .tguide summary{cursor:pointer;font-weight:700}
 .tguide ol{padding-left:1.2em;margin:8px 0}
 .tguide li+li{margin-top:4px}
@@ -538,39 +544,45 @@ body.viewing-sample{padding-bottom:70px}
   <div class="box">
     <div id="tLoginBox">
       <h3 id="tDlgT">教師登入</h3>
-      <p class="help">登入後可檢視學生擬答範例與教師操作說明。</p>
+      <p class="help">登入後進入教師後台：學生紀錄、擬答範例與操作說明。</p>
       <label class="f" style="margin-top:10px">教師密碼<input type="password" id="tPw" autocomplete="current-password"></label>
       <p class="help" id="tErr" style="color:var(--red);min-height:1.4em"></p>
       <div class="row" style="justify-content:flex-end"><button class="btn" type="button" id="tCancel">取消</button><button class="btn blue" type="button" id="tGo">登入</button></div>
-    </div>
-    <div id="tPanel" hidden>
-      <h3>教師專區</h3>
-      <p class="help">以下內容只有登入後看得到。重新整理頁面就會自動登出。</p>
-      <div class="tp-actions">
-        <button class="btn blue" type="button" id="tSample">檢視學生擬答範例</button>
-        <button class="btn" type="button" id="tSampleDocx">直接下載擬答 Word</button>
-        <button class="btn" type="button" id="tTrail">檢視學生填寫軌跡</button>
-        <button class="btn" type="button" id="tLogout">登出</button>
-      </div>
-      <details class="tguide" open><summary>教師操作說明</summary>
-        <ol>
-          <li><b>課前：</b>把本頁從「分享」開放給學生；說明本次要完成幾個任務，以及檔名、組名規則。</li>
-          <li><b>引起動機：</b>全班一起操作「故事起點」的泰勒斯模擬器，討論「一定要等影長＝棍長嗎？」</li>
-          <li><b>分組任務：</b>各組按「我的小組」填資料，點任務卡，選測量對象（任何建築皆可，也能自訂），依四階段完成。提示分三層，鼓勵先討論再打開。</li>
-          <li><b>實地測量：</b>提醒安全條件；學生把數據填進紀錄表，按「用紀錄表驗算」才會看到推算值與公式。</li>
-          <li><b>整理成果：</b>在「學習歷程」完成 6 個部分；命名與檔名格式未通過時無法匯出 Word。</li>
-          <li><b>收件：</b>學生的填寫內容與軌跡會自動寫入您的 Google 試算表（「成果」與「軌跡」兩個工作表）；Word 檔依檔名格式另外繳交。</li>
-        </ol>
-        <p class="help">學生紀錄同時存在各自裝置的瀏覽器與您的試算表。請提醒學生全程使用同一台裝置。</p>
-      </details>
     </div>
   </div>
 </div>
 <div class="sample-bar" id="sampleBar" hidden><div class="wrap sample-in"><b id="sbTitle">教師檢視：學生擬答範例</b><span id="sbNote">內容為示範答案與模擬數據，在這裡的修改不會存檔，也不會影響學生資料。</span><button class="btn sm" type="button" id="sbDocx">匯出擬答 Word</button><button class="btn sm" type="button" id="sbExit">結束檢視</button></div></div>
 <div class="trail" id="trailView" hidden role="dialog" aria-modal="true" aria-labelledby="trailT">
   <div class="trail-in wrap">
-    <div class="trail-head"><div><div class="kicker" style="color:var(--gold-deep);font-weight:700;font-size:.85rem">教師專區</div><h2 id="trailT">學生填寫軌跡</h2></div>
-      <div class="row"><button class="btn blue" type="button" id="trailLoad">從 Google 試算表讀取</button><a class="btn" id="trailSheet" href="#" target="_blank" rel="noopener" hidden>開啟試算表</a><button class="btn" type="button" id="trailClose">關閉</button></div></div>
+    <div class="trail-head"><div><div class="kicker" style="color:var(--gold-deep);font-weight:700;font-size:.85rem">教師專區</div><h2 id="trailT">教師後台</h2><p class="help">只有登入後看得到；重新整理頁面就會自動登出。</p></div>
+      <div class="row"><button class="btn" type="button" id="tLogout">登出</button><button class="btn" type="button" id="trailClose">回到網頁</button></div></div>
+    <div class="bk-tabs" role="tablist" aria-label="後台功能">
+      <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec">學生紀錄</button>
+      <button type="button" role="tab" aria-selected="false" data-bk="ans">擬答範例</button>
+      <button type="button" role="tab" aria-selected="false" data-bk="guide">操作說明</button>
+    </div>
+    <div class="bk-pane" id="bk-ans" hidden>
+      <div class="bk-cards">
+        <div class="bk-card"><h3>檢視學生擬答範例</h3><p class="help">用學生看到的版面瀏覽完整示範答案與模擬數據（影子偵探隊）。在裡面修改不會存檔。</p><button class="btn blue" type="button" id="tSample">開啟擬答範例</button></div>
+        <div class="bk-card"><h3>下載擬答 Word</h3><p class="help">直接產生擬答版的學習歷程 Word 檔，可當作評分參考或發給學生看格式。</p><button class="btn" type="button" id="tSampleDocx">下載擬答 Word</button></div>
+      </div>
+    </div>
+    <div class="bk-pane" id="bk-guide" hidden>
+      <div class="tguide">
+        <ol>
+          <li><b>課前：</b>把本頁網址分享給學生；說明本次要完成幾個任務，以及檔名、組名規則。</li>
+          <li><b>引起動機：</b>全班一起操作「故事起點」的泰勒斯模擬器，討論「一定要等影長＝棍長嗎？」</li>
+          <li><b>分組任務：</b>各組按「我的小組」填資料，點任務卡，在「01 情境探索」選<b>戶外或室內</b>與測量對象（任何建築皆可，也能自訂），依四階段完成。室內版：任務一改用鏡子反射，任務二可量樓梯，任務三在球場、天井等室內空間進行。提示分三層，鼓勵先討論再打開。</li>
+          <li><b>實地測量：</b>提醒安全條件；學生把數據填進紀錄表，按「用紀錄表驗算」才會看到推算值與公式。</li>
+          <li><b>整理成果：</b>在「學習歷程」完成 6 個部分；命名與檔名格式未通過時無法匯出 Word。</li>
+          <li><b>收件：</b>學生的填寫內容與軌跡會自動寫入您的 Google 試算表（「成果」與「軌跡」兩個工作表）；Word 檔依檔名格式另外繳交。</li>
+          <li><b>看紀錄：</b>在「學生紀錄」按「從 Google 試算表讀取」，可依日期、類型篩選；按每列的「預覽」直接看該組填寫的畫面，也能匯出該組 Word。</li>
+        </ol>
+        <p class="help">學生紀錄同時存在各自裝置的瀏覽器與您的試算表。請提醒學生全程使用同一台裝置與瀏覽器，不要用無痕模式。</p>
+      </div>
+    </div>
+    <div class="bk-pane" id="bk-rec">
+    <div class="row" style="align-items:center"><button class="btn blue" type="button" id="trailLoad">從 Google 試算表讀取</button><a class="btn" id="trailSheet" href="#" target="_blank" rel="noopener" hidden>開啟試算表</a></div>
     <p class="help" id="trailMsg">按「從 Google 試算表讀取」取得全班最新資料。每一台學生裝置為一列。</p>
     <div class="tf" id="trailFilter" hidden>
       <label>日期 <select id="tfDate"></select></label>
@@ -579,6 +591,7 @@ body.viewing-sample{padding-bottom:70px}
     </div>
     <div class="tbl"><table class="trail-tbl" id="trailList"></table></div>
     <div id="trailDetail"></div>
+    </div>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -1166,14 +1179,17 @@ $("#btnDocx").addEventListener("click",async e=>{
   const btn=e.currentTarget; btn.disabled=true; const old=btn.textContent; btn.textContent="產生中…";
   try{
     const D=window.docx; if(!D) throw new Error("Word 產生器尚未載入，請確認網路後重新整理");
-    const {Document,Packer,Paragraph,TextRun,HeadingLevel,Table,TableRow,TableCell,WidthType,AlignmentType,ImageRun,BorderStyle,Footer,PageNumber,ShadingType,PageBreak}=D;
+    const {Document,Packer,Paragraph,TextRun,HeadingLevel,Table,TableRow,TableCell,WidthType,AlignmentType,ImageRun,BorderStyle,Footer,PageNumber,ShadingType,PageBreak,TableLayoutType}=D;
     const INK="141E3C",BLUE="2748BF",GOLD="8C621E",MUT="6B7080";
     const Pp=(t,o={})=>new Paragraph({spacing:{after:100,line:340},alignment:o.center?AlignmentType.CENTER:undefined,children:[new TextRun({text:t,bold:o.b,color:o.c,italics:o.i,size:o.size})]});
     const para=t=>has(t)?String(t).split(/\n+/).map(l=>Pp(l)):[Pp("（尚未填寫）",{c:"9AA0AA",i:true})];
     const bd={style:BorderStyle.SINGLE,size:4,color:"CFC6B2"},borders={top:bd,bottom:bd,left:bd,right:bd,insideHorizontal:bd,insideVertical:bd};
-    const cell=(t,o={})=>new TableCell({shading:o.h?{type:ShadingType.CLEAR,color:"auto",fill:"F3ECDD"}:undefined,margins:{top:50,bottom:50,left:90,right:90},width:o.w?{size:o.w,type:WidthType.PERCENTAGE}:undefined,children:String(t??"").split("\n").map(l=>new Paragraph({children:[new TextRun({text:l,bold:!!o.h})]}))});
-    const table=(rows,w)=>new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:rows.map((r,i)=>new TableRow({tableHeader:i===0,children:r.map((c,j)=>cell(c,{h:i===0,w:w&&w[j]}))}))});
-    const kv=rows=>new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:rows.map(([k,v])=>new TableRow({children:[cell(k,{h:true,w:26}),cell(v,{w:74})]}))});
+    const cell=(t,o={})=>new TableCell({shading:o.h?{type:ShadingType.CLEAR,color:"auto",fill:"F3ECDD"}:undefined,margins:{top:50,bottom:50,left:90,right:90},width:o.w?{size:o.w,type:WidthType.DXA}:undefined,children:String(t??"").split("\n").map(l=>new Paragraph({children:[new TextRun({text:l,bold:!!o.h})]}))});
+    // 版面內寬 = A4 寬 11906 − 左右邊界 1250×2 = 9406（單位 DXA）；用固定欄寬，避免 Word／Google 文件把表格縮成一團
+    const CW=9406;
+    const cols=(n,w)=>{const p=w&&w.length===n?w:Array(n).fill(100/n);const sum=p.reduce((a,b)=>a+b,0);const c=p.map(x=>Math.round(CW*x/sum));c[c.length-1]+=CW-c.reduce((a,b)=>a+b,0);return c;};
+    const table=(rows,w)=>{const cw=cols(rows[0].length,w);return new Table({width:{size:CW,type:WidthType.DXA},columnWidths:cw,layout:TableLayoutType.FIXED,borders,rows:rows.map((r,i)=>new TableRow({tableHeader:i===0,cantSplit:true,children:r.map((c,j)=>cell(c,{h:i===0,w:cw[j]}))}))});};
+    const kv=rows=>{const cw=cols(2,[26,74]);return new Table({width:{size:CW,type:WidthType.DXA},columnWidths:cw,layout:TableLayoutType.FIXED,borders,rows:rows.map(([k,v])=>new TableRow({cantSplit:true,children:[cell(k,{h:true,w:cw[0]}),cell(v,{w:cw[1]})]}))});};
     const H1=t=>new Paragraph({heading:HeadingLevel.HEADING_1,children:[new TextRun(t)]}), H2=t=>new Paragraph({heading:HeadingLevel.HEADING_2,children:[new TextRun(t)]});
     const img=(data,w,h)=>new Paragraph({alignment:AlignmentType.CENTER,spacing:{before:80,after:80},children:[new ImageRun({type:"png",data,transformation:{width:w,height:h}})]});
     const kids=[];
@@ -1297,7 +1313,7 @@ async function unlock(pw){
   const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(LOCK.i)},key,b64d(LOCK.c));
   return JSON.parse(new TextDecoder().decode(pt));
 }
-function openT(){ $("#tDlg").hidden=false; $("#tLoginBox").hidden=!!SAMPLE; $("#tPanel").hidden=!SAMPLE; if(!SAMPLE){$("#tPw").value="";$("#tErr").textContent="";$("#tPw").focus();} }
+function openT(){ if(SAMPLE){openTrail();return;} $("#tDlg").hidden=false; $("#tPw").value="";$("#tErr").textContent="";$("#tPw").focus(); }
 function closeT(){ $("#tDlg").hidden=true; }
 async function doLogin(){
   const b=$("#tGo"); b.disabled=true; $("#tErr").textContent="驗證中…";
@@ -1319,7 +1335,7 @@ function enterSample(){
 function exitSample(){
   if(!viewingSample) return; clearTimeout(saveT); viewingSample=false; S=studentS||blankState(); studentS=null;
   document.body.classList.remove("viewing-sample"); $("#sampleBar").hidden=true; bootRender(); $("#saveInfo").textContent="學習紀錄會自動存在這台裝置的瀏覽器。";
-  if(viewFrom==="trail"){viewFrom=null;$("#trailView").hidden=false;toast("已回到學生軌跡");} else toast("已回到你的資料");
+  if(viewFrom==="trail"){viewFrom=null;$("#trailView").hidden=false;toast("已回到教師後台");} else toast("已回到你的資料");
 }
 async function sampleDocx(){ const was=viewingSample; if(!was) enterSample(); $("#btnDocx").click(); }
 $("#tBtn").addEventListener("click",openT);
@@ -1328,16 +1344,17 @@ $("#tGo").addEventListener("click",doLogin);
 $("#tPw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
 $("#tDlg").addEventListener("click",e=>{if(e.target.id==="tDlg")closeT();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#tDlg").hidden)closeT();});
-$("#tSample").addEventListener("click",enterSample);
-$("#tSampleDocx").addEventListener("click",()=>{closeT();sampleDocx();});
-$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
+$("#tSample").addEventListener("click",()=>{$("#trailView").hidden=true;enterSample();viewFrom="trail";});
+$("#tSampleDocx").addEventListener("click",()=>{$("#trailView").hidden=true;sampleDocx();viewFrom="trail";});
+$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
+function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});}
+$$(".bk-tabs button").forEach(b=>b.addEventListener("click",()=>bkTab(b.dataset.bk)));
 $("#sbExit").addEventListener("click",exitSample);
 $("#sbDocx").addEventListener("click",()=>$("#btnDocx").click());
 
 /* ---------- teacher: trail viewer ---------- */
 let trailSubs=[], trailSel=null, tPwMem="";
 function openTrail(){closeT();$("#trailView").hidden=false;renderTrailList();if(!trailSubs.length&&CLOUD)loadCloud();}
-$("#tTrail").addEventListener("click",openTrail);
 $("#trailClose").addEventListener("click",()=>{$("#trailView").hidden=true;});
 $("#trailLoad").addEventListener("click",()=>loadCloud());
 async function loadCloud(){
