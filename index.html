@@ -260,6 +260,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);bo
 .bk-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .bk-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 .bk-card h3{font-size:1.05rem}
+.vbox{position:relative;width:100%;max-width:960px;aspect-ratio:16/9;background:#2E2A3B;border-radius:12px;overflow:hidden}
+.vbox video{width:100%;height:100%;display:block;background:#2E2A3B}
+.vmiss{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;text-align:center;padding:20px}
+.vmiss .btn{background:#fff}
 .tguide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;font-size:.95rem;line-height:1.8}
 .tguide summary{cursor:pointer;font-weight:700}
 .tguide ol{padding-left:1.2em;margin:8px 0}
@@ -559,12 +563,22 @@ body.viewing-sample{padding-bottom:70px}
     <div class="bk-tabs" role="tablist" aria-label="後台功能">
       <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec">學生紀錄</button>
       <button type="button" role="tab" aria-selected="false" data-bk="ans">擬答範例</button>
+      <button type="button" role="tab" aria-selected="false" data-bk="video">開場影片</button>
       <button type="button" role="tab" aria-selected="false" data-bk="guide">操作說明</button>
     </div>
     <div class="bk-pane" id="bk-ans" hidden>
       <div class="bk-cards">
         <div class="bk-card"><h3>檢視學生擬答範例</h3><p class="help">用學生看到的版面瀏覽完整示範答案與模擬數據（影子偵探隊）。在裡面修改不會存檔。</p><button class="btn blue" type="button" id="tSample">開啟擬答範例</button></div>
         <div class="bk-card"><h3>下載擬答 Word</h3><p class="help">直接產生擬答版的學習歷程 Word 檔，可當作評分參考或發給學生看格式。</p><button class="btn" type="button" id="tSampleDocx">下載擬答 Word</button></div>
+      </div>
+    </div>
+    <div class="bk-pane" id="bk-video" hidden>
+      <div class="bk-card" style="align-items:stretch">
+        <h3>成果發表會開場影片</h3>
+        <p class="help">英文配音＋中文字幕，約 2 分 31 秒。投影時建議按「全螢幕播放」，並把教室喇叭打開。</p>
+        <div class="vbox"><video id="bkVid" controls playsinline preload="metadata" src="opening.mp4"></video>
+          <div class="vmiss" id="bkVidMiss" hidden><b>找不到影片檔</b><span>請把「opening.mp4」和本頁一起上傳到 GitHub 同一個資料夾，或按下面按鈕先選電腦裡的影片來播放。</span><label class="btn">選擇影片檔<input type="file" id="bkVidPick" accept="video/*" hidden></label></div></div>
+        <div class="row"><button class="btn blue" type="button" id="bkVidFull">全螢幕播放</button><button class="btn" type="button" id="bkVidRestart">從頭播放</button></div>
       </div>
     </div>
     <div class="bk-pane" id="bk-guide" hidden>
@@ -1347,15 +1361,21 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#tDlg").hidden)
 $("#tSample").addEventListener("click",()=>{$("#trailView").hidden=true;enterSample();viewFrom="trail";});
 $("#tSampleDocx").addEventListener("click",()=>{$("#trailView").hidden=true;sampleDocx();viewFrom="trail";});
 $("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
-function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});}
+function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","video","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="video"){const v=$("#bkVid");if(v)v.pause();}}
 $$(".bk-tabs button").forEach(b=>b.addEventListener("click",()=>bkTab(b.dataset.bk)));
+{const v=$("#bkVid");
+ v.addEventListener("error",()=>{$("#bkVidMiss").hidden=false;});
+ v.addEventListener("loadeddata",()=>{$("#bkVidMiss").hidden=true;});
+ $("#bkVidPick").addEventListener("change",e=>{const f=e.target.files[0];if(f){v.src=URL.createObjectURL(f);v.load();}});
+ $("#bkVidFull").addEventListener("click",async()=>{try{await (v.requestFullscreen?v.requestFullscreen():v.webkitEnterFullscreen&&v.webkitEnterFullscreen());}catch(e){}v.play().catch(()=>{});});
+ $("#bkVidRestart").addEventListener("click",()=>{v.currentTime=0;v.play().catch(()=>{});});}
 $("#sbExit").addEventListener("click",exitSample);
 $("#sbDocx").addEventListener("click",()=>$("#btnDocx").click());
 
 /* ---------- teacher: trail viewer ---------- */
 let trailSubs=[], trailSel=null, tPwMem="";
 function openTrail(){closeT();$("#trailView").hidden=false;renderTrailList();if(!trailSubs.length&&CLOUD)loadCloud();}
-$("#trailClose").addEventListener("click",()=>{$("#trailView").hidden=true;});
+$("#trailClose").addEventListener("click",()=>{$("#trailView").hidden=true;const v=$("#bkVid");if(v)v.pause();});
 $("#trailLoad").addEventListener("click",()=>loadCloud());
 async function loadCloud(){
   const msg=$("#trailMsg");
