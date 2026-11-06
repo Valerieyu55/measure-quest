@@ -662,7 +662,7 @@ body.viewing-sample{padding-bottom:70px}
 <div id="printRoot"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.iife.js"></script>
-<script src="library.js"></script>
+<script src="library.js?v=7fe07819"></script>
 <script>
 (function(){
 "use strict";
@@ -1579,13 +1579,14 @@ async function unlockLib(pw){
     libKey=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(L.s),iterations:L.n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
     const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},libKey,b64d(L.c));
     LIB=JSON.parse(new TextDecoder().decode(pt));
-  }catch(e){ $("#clsMsg").textContent="班級資料夾的加密密碼和登入密碼不一致，無法解開。"; }
+    if(!LIB.folders||!LIB.folders.every(f=>Array.isArray(f.items))){LIB=null;$("#clsMsg").textContent="目錄檔是舊版（瀏覽器快取），請按住 Shift 重新整理頁面後再登入。";}
+  }catch(e){ $("#clsMsg").textContent="班級資料夾的加密密碼和登入密碼不一致，無法解開。請按住 Shift 重新整理頁面後再試。"; }
   renderCls();
 }
 async function libBytes(x,btn){
   const old=btn&&btn.textContent; if(btn){btn.disabled=true;btn.textContent="讀取中…";}
   try{
-    const r=await fetch(x.path,{cache:"force-cache"}); if(!r.ok)throw new Error("fetch");
+    const r=await fetch(x.path+(x.v?"?v="+x.v:""),{cache:"force-cache"}); if(!r.ok)throw new Error("fetch");
     const buf=new Uint8Array(await r.arrayBuffer());
     if(!x.enc)return buf;
     return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:buf.slice(0,12)},libKey,buf.slice(12)));
