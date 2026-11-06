@@ -397,6 +397,102 @@ body.viewing-sample{padding-bottom:70px}
   .pr-fb .fb-foot{display:none}
   @page{margin:12mm}
 }
+/* ---------- teacher console: visual system matched to the homepage ---------- */
+.trail{background:var(--paper)}
+.bk-top{position:sticky;top:0;z-index:6;background:rgba(251,248,242,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bk-top-in{display:flex;align-items:center;gap:18px;padding-block:12px}
+.bk-top .logo b{font-size:1.45rem}
+.bk-badge{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--gold-deep);background:var(--gold-soft);border:1px solid #E8D29B;border-radius:999px;padding:4px 12px;margin-left:auto}
+.bk-badge svg{flex:none}
+.trail-in.bk-shell{display:grid;grid-template-columns:232px minmax(0,1fr);gap:40px;padding-block:30px 90px;align-items:start}
+.bk-side{position:sticky;top:86px;display:flex;flex-direction:column;gap:12px}
+.bk-side-k{font-size:.72rem;color:var(--gold-deep);padding-left:4px}
+.bk-side .bk-tabs{flex-direction:column;border:0;gap:4px;flex-wrap:nowrap}
+.bk-side .bk-tabs button{display:flex;align-items:flex-start;gap:12px;text-align:left;border:1px solid transparent;border-left:3px solid transparent;border-radius:6px;padding:12px 14px;color:var(--ink2);font-weight:500;background:none}
+.bk-side .bk-tabs button .n{font-family:var(--latin);font-size:1.4rem;line-height:1;color:#B5AE9E;min-width:28px;padding-top:2px}
+.bk-side .bk-tabs button b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--ink);font-weight:900}
+.bk-side .bk-tabs button small{display:block;font-size:.74rem;color:var(--muted);font-weight:400;line-height:1.45;margin-top:2px}
+.bk-side .bk-tabs button:hover{background:rgba(255,255,255,.7)}
+.bk-side .bk-tabs button.on{background:var(--card);border-color:var(--line);border-left-color:var(--blue);box-shadow:0 2px 10px rgba(20,30,60,.06)}
+.bk-side .bk-tabs button.on .n{color:var(--blue)}
+.bk-side-note{display:flex;gap:8px;font-size:.76rem;color:var(--muted);line-height:1.6;border-top:1px solid var(--line);padding:12px 4px 0}
+.bk-side-note svg{flex:none;margin-top:3px;color:var(--gold)}
+.bk-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.bk-hero{border-bottom:1px solid var(--line);padding-bottom:18px}
+.bk-chapter{font-size:.76rem;font-weight:700;color:var(--blue);letter-spacing:.16em}
+.bk-hero h2{font-size:2.35rem;font-weight:900;margin-top:8px;letter-spacing:.02em}
+.bk-hero p{color:var(--ink2);margin-top:8px;max-width:62ch}
+.bk-pane{gap:18px}
+.bk-card{border-radius:6px;box-shadow:0 2px 10px rgba(20,30,60,.06);padding:20px 22px}
+.bk-card h3{font-weight:900;font-size:1.15rem}
+.bk-cards .bk-card .n{font-family:var(--latin);font-size:1.6rem;line-height:1;color:var(--gold)}
+/* student records */
+#bk-rec>.row{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px;box-shadow:0 2px 10px rgba(20,30,60,.06)}
+#bk-rec .tbl{border:1px solid var(--line);border-radius:6px;overflow:auto;box-shadow:0 2px 10px rgba(20,30,60,.06);background:var(--card)}
+.tf{border-radius:6px}
+/* guide timeline */
+.tguide{border-radius:6px;box-shadow:0 2px 10px rgba(20,30,60,.06);padding:26px 28px}
+.tguide ol{list-style:none;counter-reset:g;padding:0;margin:0}
+.tguide li{counter-increment:g;position:relative;margin:0 0 0 19px!important;padding:0 0 20px 34px;border-left:1px solid var(--line)}
+.tguide li:last-child{border-left-color:transparent;padding-bottom:4px}
+.tguide li::before{content:counter(g,decimal-leading-zero);position:absolute;left:-19px;top:-4px;width:38px;height:38px;border-radius:50%;background:var(--card);border:1.5px solid var(--gold);color:var(--gold-deep);font-family:var(--latin);font-size:1.05rem;display:grid;place-items:center}
+.tguide li>b:first-child{font-family:var(--serif);font-weight:900;color:var(--ink);display:block;font-size:1.02rem}
+.tguide>.help{margin-top:6px;padding:12px 14px;background:var(--blue-soft);border-radius:6px;color:var(--ink2)}
+/* class folders */
+.fd-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.fd{font:inherit;color:inherit;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;box-shadow:0 2px 10px rgba(20,30,60,.06);transition:transform .15s,box-shadow .15s;cursor:pointer}
+.fd:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,30,60,.1)}
+.fd.on{outline:2px solid var(--blue);outline-offset:-1px}
+.fd-ic{grid-row:1/3;width:44px;height:44px;border-radius:10px;background:var(--gold-soft);color:var(--gold-deep);display:grid;place-items:center}
+.fd.on .fd-ic{background:var(--blue);color:#fff}
+.fd-t small{display:block;font-family:var(--latin);letter-spacing:.14em;color:var(--gold-deep);font-size:.82rem;line-height:1.2}
+.fd-t b{display:block;font-family:var(--serif);font-size:1.18rem;font-weight:900;line-height:1.3}
+.fd-n{font-size:.78rem;color:var(--muted)}
+.fd-n em{font-style:normal;color:var(--blue-deep);font-weight:700}
+.fd-add{border-style:dashed;box-shadow:none;background:transparent;cursor:default;grid-template-columns:1fr}
+.fd-add:hover{transform:none;box-shadow:none}
+.fd-add b{font-family:var(--serif);color:var(--ink2);font-size:1rem}
+.fd-add span{font-size:.76rem;color:var(--muted);line-height:1.5}
+.fd-band{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;background:var(--ink);color:#fff;border-radius:6px;padding:18px 22px;position:relative;overflow:hidden}
+.fd-band::after{content:"";position:absolute;right:-40px;top:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(247,213,122,.28),transparent 65%);pointer-events:none}
+.fd-band .bk-chapter{color:var(--yellow)}
+.fd-band h3{font-size:1.6rem;font-weight:900;color:#fff;margin-top:4px}
+.fd-band h3 span{font-family:var(--latin);font-weight:500;color:#C9CEDC;font-size:1.15rem;margin-left:10px;letter-spacing:.06em}
+.fd-band .prog{display:flex;gap:6px;align-items:center;font-size:.8rem;color:#C9CEDC;position:relative;z-index:1}
+.fd-band .prog i{width:22px;height:6px;border-radius:3px;background:rgba(255,255,255,.18)}
+.fd-band .prog i.on{background:var(--yellow)}
+.cls-cat{background:none;border:0;padding:0;gap:12px}
+.cls-cat h3{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px;font-size:1.3rem;font-weight:900}
+.cls-cat h3 .n{font-family:var(--latin);font-size:1.7rem;line-height:1;color:var(--gold);font-weight:500}
+.cls-cat h3 .en{font-family:var(--latin);letter-spacing:.16em;text-transform:uppercase;font-size:.76rem;color:var(--muted);font-weight:500}
+.cls-cat h3 .c{margin-left:auto;font-family:var(--sans);font-size:.8rem;color:var(--muted);font-weight:400}
+.cls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.fl{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:0 2px 10px rgba(20,30,60,.06);padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+.fl-wide{grid-column:1/-1}
+.fl-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fl-ic{width:42px;height:50px;border-radius:4px 12px 4px 4px;display:grid;place-items:center;color:#fff;font-family:var(--latin);font-weight:600;font-size:.78rem;letter-spacing:.06em;flex:none;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14)}
+.k-pdf{background:#B9442A}.k-pptx{background:#C8641E}.k-docx{background:var(--blue)}.k-xlsx{background:var(--green)}.k-video{background:var(--ink)}.k-feedback{background:var(--gold)}.k-image,.k-other{background:#6B7080}
+.fl-t{flex:1;min-width:180px}
+.fl-t b{display:block;font-family:var(--serif);font-weight:900;font-size:1.06rem;line-height:1.35;color:var(--ink)}
+.fl-t span{font-size:.8rem;color:var(--muted)}
+.fl-act{display:flex;gap:8px;flex-wrap:wrap}
+.fl-video .vbox{max-width:860px;border-radius:6px}
+.cls-empty{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.84rem;color:var(--muted);padding:12px 16px;border:1px dashed #D9CFB9;border-radius:6px}
+.cls-empty span{border:1px dashed #CFC6B2;border-radius:999px;padding:2px 12px;color:var(--ink2);background:var(--card)}
+.cls-fb{border-top:1px solid var(--line);padding-top:14px}
+.fb-card{border-radius:6px;box-shadow:0 2px 10px rgba(20,30,60,.05)}
+.fb-chips button{border-radius:999px}
+@media (max-width:900px){
+  .trail-in.bk-shell{grid-template-columns:1fr;gap:18px;padding-block:16px 70px}
+  .bk-side{position:static}
+  .bk-side .bk-tabs{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .bk-side .bk-tabs button{flex:none;padding:8px 12px;align-items:center;border-left-width:1px}
+  .bk-side .bk-tabs button.on{border-color:var(--blue)}
+  .bk-side .bk-tabs button small,.bk-side-note,.bk-side-k{display:none}
+  .bk-side .bk-tabs button .n{font-size:1.1rem;min-width:0;padding:0}
+  .bk-hero h2{font-size:1.8rem}
+}
+@media (max-width:640px){.bk-badge{display:none}.bk-top .logo .ver{display:none}}
 </style>
 </head>
 <body>
@@ -609,24 +705,33 @@ body.viewing-sample{padding-bottom:70px}
 </div>
 <div class="sample-bar" id="sampleBar" hidden><div class="wrap sample-in"><b id="sbTitle">教師檢視：學生擬答範例</b><span id="sbNote">內容為示範答案與模擬數據，在這裡的修改不會存檔，也不會影響學生資料。</span><button class="btn sm" type="button" id="sbDocx">匯出擬答 Word</button><button class="btn sm" type="button" id="sbExit">結束檢視</button></div></div>
 <div class="trail" id="trailView" hidden role="dialog" aria-modal="true" aria-labelledby="trailT">
-  <div class="trail-in wrap">
-    <div class="trail-head"><div><div class="kicker" style="color:var(--gold-deep);font-weight:700;font-size:.85rem">教師專區</div><h2 id="trailT">教師後台</h2><p class="help">只有登入後看得到；重新整理頁面就會自動登出。</p></div>
-      <div class="row"><button class="btn" type="button" id="tLogout">登出</button><button class="btn" type="button" id="trailClose">回到網頁</button></div></div>
-    <div class="bk-tabs" role="tablist" aria-label="後台功能">
-      <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec">學生紀錄</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="ans">擬答範例</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="cls">班級資料夾</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="guide">操作說明</button>
-    </div>
+  <div class="bk-top"><div class="wrap bk-top-in">
+    <div class="logo"><svg width="50" height="30" viewBox="0 0 56 34" aria-hidden="true"><path d="M2 32 L20 6 L38 32 Z" fill="#B8862E"/><path d="M20 6 L38 32 L28 32 Z" fill="#8C621E"/><g stroke="#B8862E" stroke-width="1.2"><line x1="30" y1="14" x2="54" y2="32"/><line x1="36" y1="10" x2="54" y2="24"/><line x1="24" y1="18" x2="42" y2="32"/></g></svg><b>測量遠征</b><span class="ver latin">Teacher<br>Console</span></div>
+    <span class="bk-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>教師專區・重新整理即登出</span>
+    <div class="row"><button class="btn" type="button" id="trailClose">回到網頁</button><button class="btn" type="button" id="tLogout">登出</button></div>
+  </div></div>
+  <div class="trail-in wrap bk-shell">
+    <aside class="bk-side">
+      <div class="bk-side-k latin">Teacher Console</div>
+      <div class="bk-tabs" role="tablist" aria-label="後台功能">
+      <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec"><span class="n">01</span><span><b>學生紀錄</b><small>全班填寫內容與軌跡</small></span></button>
+      <button type="button" role="tab" class="" aria-selected="false" data-bk="ans"><span class="n">02</span><span><b>擬答範例</b><small>示範答案與擬答 Word</small></span></button>
+      <button type="button" role="tab" class="" aria-selected="false" data-bk="cls"><span class="n">03</span><span><b>班級資料夾</b><small>影片、回饋、獎狀、簡報、照片</small></span></button>
+      <button type="button" role="tab" class="" aria-selected="false" data-bk="guide"><span class="n">04</span><span><b>操作說明</b><small>從課前到發表會</small></span></button>
+      </div>
+      <p class="bk-side-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span>擬答與班級資料夾都以教師密碼加密，學生看不到。</span></p>
+    </aside>
+    <main class="bk-main">
+      <div class="bk-hero"><div class="bk-chapter">CHAPTER <span id="bkHeroN">01</span> · <span id="bkHeroEn" class="latin">Student Records</span></div><h2 id="trailT">學生紀錄</h2><p id="bkHeroD">從 Google 試算表讀取全班每台裝置的填寫內容與軌跡；點一列可預覽該組的畫面，也能匯出 Word。</p></div>
     <div class="bk-pane" id="bk-ans" hidden>
       <div class="bk-cards">
-        <div class="bk-card"><h3>檢視學生擬答範例</h3><p class="help">用學生看到的版面瀏覽完整示範答案與模擬數據（影子偵探隊）。在裡面修改不會存檔。</p><button class="btn blue" type="button" id="tSample">開啟擬答範例</button></div>
-        <div class="bk-card"><h3>下載擬答 Word</h3><p class="help">直接產生擬答版的學習歷程 Word 檔，可當作評分參考或發給學生看格式。</p><button class="btn" type="button" id="tSampleDocx">下載擬答 Word</button></div>
+        <div class="bk-card"><span class="n">A</span><h3>檢視學生擬答範例</h3><p class="help">用學生看到的版面瀏覽完整示範答案與模擬數據（影子偵探隊）。在裡面修改不會存檔。</p><button class="btn blue" type="button" id="tSample">開啟擬答範例</button></div>
+        <div class="bk-card"><span class="n">B</span><h3>下載擬答 Word</h3><p class="help">直接產生擬答版的學習歷程 Word 檔，可當作評分參考或發給學生看格式。</p><button class="btn" type="button" id="tSampleDocx">下載擬答 Word</button></div>
       </div>
     </div>
     <div class="bk-pane" id="bk-cls" hidden>
       <p class="help" id="clsMsg">資料已用教師密碼加密，登入後自動解開。</p>
-      <div class="fb-chips" id="clsChips"></div>
+      <div class="fd-row" id="clsChips"></div>
       <div id="clsBody" style="display:flex;flex-direction:column;gap:12px"></div>
       <div class="lib-view" id="libView" hidden><div class="bar"><b id="libViewName"></b><button class="btn sm" type="button" id="libViewDl">下載</button><button class="btn sm" type="button" id="libViewClose">關閉預覽</button></div><iframe id="libFrame" title="檔案預覽"></iframe></div>
     </div>
@@ -656,6 +761,7 @@ body.viewing-sample{padding-bottom:70px}
     <div class="tbl"><table class="trail-tbl" id="trailList"></table></div>
     <div id="trailDetail"></div>
     </div>
+    </main>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -1413,7 +1519,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#tDlg").hidden)
 $("#tSample").addEventListener("click",()=>{$("#trailView").hidden=true;enterSample();viewFrom="trail";});
 $("#tSampleDocx").addEventListener("click",()=>{$("#trailView").hidden=true;sampleDocx();viewFrom="trail";});
 $("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; LIB=null; renderCls(); tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
-function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","cls","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="cls")clsPause();}
+function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","cls","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="cls")clsPause();setBkHero(k);}
 $$(".bk-tabs button").forEach(b=>b.addEventListener("click",()=>bkTab(b.dataset.bk)));
 $("#sbExit").addEventListener("click",exitSample);
 $("#sbDocx").addEventListener("click",()=>$("#btnDocx").click());
@@ -1600,32 +1706,46 @@ async function libUrl(x,btn){
   const u=URL.createObjectURL(new Blob([b],{type:MIME[x.kind]||MIME[(x.name.split(".").pop()||"").toLowerCase()]||"application/octet-stream"})); libUrls[x.path]=u; return u;
 }
 function dl(url,name){const a=document.createElement("a");a.href=url;a.download=name;a.click();}
+const BK_META={rec:["01","Student Records","學生紀錄","從 Google 試算表讀取全班每台裝置的填寫內容與軌跡；點一列可預覽該組的畫面，也能匯出 Word。"],
+ ans:["02","Sample Answers","擬答範例","用學生看到的版面檢視完整示範答案，或直接下載擬答版學習歷程 Word。"],
+ cls:["03","Class Folders","班級資料夾","每個班級（場次）一個資料夾，依類別收好開場影片、成果回饋、獎狀、頒獎簡報與照片影片。"],
+ guide:["04","Teacher Guide","操作說明","從課前分享網址，到實地測量、收件與發表會的完整流程。"]};
+function setBkHero(k){const m=BK_META[k];if(!m)return;$("#bkHeroN").textContent=m[0];$("#bkHeroEn").textContent=m[1];$("#trailT").textContent=m[2];$("#bkHeroD").textContent=m[3];}
+const CAT_EN={"開場影片":"Opening Film","成果回饋":"Feedback","獎狀":"Certificates","頒獎簡報":"Ceremony Slides","照片":"Photos","影片":"Videos","其他":"Others"};
+const KIND_LBL={pdf:"PDF",pptx:"PPT",docx:"DOC",xlsx:"XLS",video:"MP4",feedback:"FB",image:"IMG"};
+const FOLDER_SVG='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+function folderParts(n){const p=String(n).split("-");if(p.length>=4)return{term:p[0]+"-"+p[1],cls:p.slice(2,-1).join("-"),date:p[p.length-1]};return{term:"",cls:n,date:""};}
 function itemCard(x,fi,ii){
-  const id=`data-f="${fi}" data-i="${ii}"`, meta=`<span class="help">${[fmtSize(x.size),x.note].filter(Boolean).map(esc).join(" · ")}</span>`;
-  if(x.kind==="video")return `<div class="bk-card cls-video" style="align-items:stretch"><h3>${esc(x.name)}</h3>${meta}<div class="vbox"><video controls playsinline preload="metadata" ${x.enc?"":`src="${esc(x.path)}"`}></video><div class="vmiss" hidden><b>還沒載入</b><span>按「載入影片」解密後播放。</span></div></div><div class="row">${x.enc?`<button class="btn" type="button" data-act="vload" ${id}>載入影片</button>`:""}<button class="btn blue" type="button" data-act="vfull" ${id}>全螢幕播放</button><button class="btn" type="button" data-act="vrestart" ${id}>從頭播放</button></div></div>`;
-  if(x.kind==="feedback")return `<div class="bk-card" style="align-items:stretch"><h3>${esc(x.name)}</h3>${meta}<div class="row"><button class="btn blue" type="button" data-act="fbopen" ${id}>開啟成果回饋</button></div><div class="cls-fb" hidden></div></div>`;
+  const id=`data-f="${fi}" data-i="${ii}"`, meta=`<span>${[fmtSize(x.size),x.note].filter(Boolean).map(esc).join(" · ")}</span>`;
+  const kind=KIND_LBL[x.kind]?x.kind:"other", ic=`<span class="fl-ic k-${kind}">${KIND_LBL[x.kind]||"FILE"}</span>`, head=t=>`<div class="fl-head">${ic}<div class="fl-t"><b>${esc(x.name)}</b>${meta}</div>${t||""}</div>`;
+  if(x.kind==="video")return `<div class="fl fl-wide fl-video">${head(`<div class="fl-act">${x.enc?`<button class="btn" type="button" data-act="vload" ${id}>載入影片</button>`:""}<button class="btn blue" type="button" data-act="vfull" ${id}>全螢幕播放</button><button class="btn" type="button" data-act="vrestart" ${id}>從頭播放</button></div>`)}<div class="vbox"><video controls playsinline preload="metadata" ${x.enc?"":`src="${esc(x.path)}"`}></video><div class="vmiss" hidden><b>還沒載入</b><span>按「載入影片」解密後播放。</span></div></div></div>`;
+  if(x.kind==="feedback")return `<div class="fl fl-wide">${head(`<div class="fl-act"><button class="btn blue" type="button" data-act="fbopen" ${id}>開啟成果回饋</button></div>`)}<div class="cls-fb" hidden></div></div>`;
   if(x.kind==="image")return `<figure class="cls-img" ${id}><div class="ph"></div><figcaption>${esc(x.name)}</figcaption></figure>`;
-  const canView=x.kind==="pdf";
-  return `<div class="bk-card"><h3>${esc(x.name)}</h3>${meta}<div class="row">${canView?`<button class="btn" type="button" data-act="view" ${id}>預覽</button>`:""}<button class="btn blue" type="button" data-act="dl" ${id}>下載</button></div></div>`;
+  return `<div class="fl">${head()}<div class="fl-act">${x.kind==="pdf"?`<button class="btn" type="button" data-act="view" ${id}>預覽</button>`:""}<button class="btn blue" type="button" data-act="dl" ${id}>下載</button></div></div>`;
 }
 function renderCls(){
   const el=$("#clsBody"), chips=$("#clsChips"); $("#libView").hidden=true; clsPause();
   if(!LIB){el.innerHTML="";chips.innerHTML="";return;}
-  $("#clsMsg").textContent="每個班級（場次）一個資料夾；資料夾內依類別分區。要新增班級或補照片影片，把檔案和資料夾名稱交給 Claude 加密後放上來。";
-  chips.innerHTML=LIB.folders.map((f,i)=>`<button type="button" class="${i===clsSel?"on":""}" data-i="${i}">${esc(f.name)}</button>`).join("");
-  qa("button",chips).forEach(b=>b.addEventListener("click",()=>{clsSel=+b.dataset.i;renderCls();}));
-  const f=LIB.folders[clsSel], fi=clsSel;
-  el.innerHTML=CATS.map(cat=>{
+  $("#clsMsg").textContent="點資料夾切換班級。要新增班級，或補照片、影片，把檔案和資料夾名稱交給 Claude，加密後放上來。";
+  chips.innerHTML=LIB.folders.map((f,i)=>{const p=folderParts(f.name),c=new Set(f.items.map(x=>x.cat||"其他")).size;
+    return `<button type="button" class="fd ${i===clsSel?"on":""}" data-i="${i}"><span class="fd-ic">${FOLDER_SVG}</span><span class="fd-t">${p.term?`<small>${esc(p.term)}</small>`:""}<b>${esc(p.cls)}</b></span><span class="fd-n">${esc(p.date)}${p.date?"・":""}<em>${f.items.length}</em> 個項目・${c} 類</span></button>`;}).join("")
+    +`<div class="fd fd-add"><b>＋ 新的班級</b><span>資料夾名稱建議：學期-班級-日期<br>例：115-1-G9直升A-2026/11/20</span></div>`;
+  qa("button.fd",chips).forEach(b=>b.addEventListener("click",()=>{clsSel=+b.dataset.i;renderCls();}));
+  const f=LIB.folders[clsSel], fi=clsSel, p=folderParts(f.name);
+  const filled=CATS.filter(cat=>f.items.some(x=>(x.cat||"其他")===cat)), empty=CATS.filter(c=>c!=="其他"&&!filled.includes(c));
+  let html=`<div class="fd-band"><div><div class="bk-chapter">FOLDER${p.term?" · "+esc(p.term):""}</div><h3>${esc(p.cls)}${p.date?`<span>${esc(p.date)}</span>`:""}</h3></div><div class="prog">${CATS.filter(c=>c!=="其他").map(c=>`<i class="${filled.includes(c)?"on":""}" title="${esc(c)}"></i>`).join("")}<span>${filled.filter(c=>c!=="其他").length}／6 類已放入</span></div></div>`;
+  html+=filled.map(cat=>{
     const items=f.items.map((x,ii)=>[x,ii]).filter(([x])=>(x.cat||"其他")===cat);
-    if(!items.length)return `<section class="cls-cat empty"><h3>${esc(cat)}</h3><p class="help">尚未加入。</p></section>`;
-    const isImg=items.every(([x])=>x.kind==="image");
-    return `<section class="cls-cat"><h3>${esc(cat)}<span>${items.length}</span></h3><div class="${isImg?"cls-gallery":"bk-cards"}">${items.map(([x,ii])=>itemCard(x,fi,ii)).join("")}</div></section>`;
+    const isImg=items.every(([x])=>x.kind==="image"), n=String(CATS.indexOf(cat)+1).padStart(2,"0");
+    return `<section class="cls-cat"><h3><span class="n">${n}</span>${esc(cat)}<span class="en">${CAT_EN[cat]||""}</span><span class="c">${items.length} 個</span></h3><div class="${isImg?"cls-gallery":"cls-grid"}">${items.map(([x,ii])=>itemCard(x,fi,ii)).join("")}</div></section>`;
   }).join("");
+  if(empty.length)html+=`<div class="cls-empty">尚未加入：${empty.map(c=>`<span>${esc(c)}</span>`).join("")}</div>`;
+  el.innerHTML=html;
   qa("[data-act]",el).forEach(b=>b.addEventListener("click",()=>clsAct(b.dataset.act,LIB.folders[+b.dataset.f].items[+b.dataset.i],b)));
   qa("figure.cls-img",el).forEach(async fg=>{const x=LIB.folders[+fg.dataset.f].items[+fg.dataset.i];const u=await libUrl(x);if(u){fg.querySelector(".ph").innerHTML=`<img src="${u}" alt="${esc(x.name)}" loading="lazy">`;fg.addEventListener("click",()=>window.open(u,"_blank"));}});
 }
 async function clsAct(act,x,btn){
-  const card=btn.closest(".bk-card");
+  const card=btn.closest(".fl");
   if(act==="vload"){const v=card.querySelector("video");const u=await libUrl(x,btn);if(u){v.src=u;v.load();card.querySelector(".vmiss").hidden=true;}return;}
   if(act==="vfull"){const v=card.querySelector("video");if(!v.src){if(x.enc){const u=await libUrl(x,btn);if(!u)return;v.src=u;}}try{await (v.requestFullscreen?v.requestFullscreen():v.webkitEnterFullscreen&&v.webkitEnterFullscreen());}catch(e){}v.play().catch(()=>{});return;}
   if(act==="vrestart"){const v=card.querySelector("video");v.currentTime=0;v.play().catch(()=>{});return;}
