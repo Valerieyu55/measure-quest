@@ -370,67 +370,31 @@ body.viewing-sample{padding-bottom:70px}
 .fb-foot{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px}
 .fb-common{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:760px){.fb-common{grid-template-columns:1fr}}
-/* certificate */
-.cert-tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px 14px;align-items:end}
-.cert-tools label{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
-.cert-tools input{font:inherit;font-size:.95rem;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
-.cert-stage{width:100%;overflow:hidden;background:#E9E3D6;border-radius:14px;padding:16px;display:flex;justify-content:center}
-.cert-scale{transform-origin:top left}
-.cert{width:297mm;height:210mm;background:#FFFDF8;position:relative;padding:14mm 18mm;box-sizing:border-box;font-family:var(--serif);color:var(--ink);display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden}
-.cert::before{content:"";position:absolute;inset:7mm;border:1.2mm solid var(--gold);border-radius:2mm}
-.cert::after{content:"";position:absolute;inset:9.5mm;border:.35mm solid var(--gold-deep);border-radius:1.5mm}
-.cert .ct-corner{position:absolute;width:16mm;height:16mm;border:1.2mm solid var(--gold-deep)}
-.cert .ct-c1{left:5mm;top:5mm;border-right:0;border-bottom:0}.cert .ct-c2{right:5mm;top:5mm;border-left:0;border-bottom:0}
-.cert .ct-c3{left:5mm;bottom:5mm;border-right:0;border-top:0}.cert .ct-c4{right:5mm;bottom:5mm;border-left:0;border-top:0}
-.cert .latin{font-family:var(--latin);color:var(--gold-deep);font-size:4mm;letter-spacing:.3em;margin-top:6mm}
-.cert .ct-title{font-size:19mm;font-weight:900;letter-spacing:.45em;margin-top:3mm;color:#1f3d35;line-height:1.1;text-indent:.45em}
-.cert .ct-rule{width:70mm;height:.6mm;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:5mm auto 6mm}
-.cert .ct-who{font-size:8.5mm;font-weight:700;line-height:1.35}
-.cert .ct-who small{display:block;font-size:4.2mm;color:var(--muted);font-family:var(--sans);font-weight:500;margin-top:1mm}
-.cert .ct-award{margin-top:6mm;font-size:5mm;color:var(--ink2);font-family:var(--sans)}
-.cert .ct-award b{display:block;font-size:14mm;color:var(--gold-deep);font-weight:900;letter-spacing:.12em;line-height:1.2;margin-top:1mm}
-.cert .ct-cite{font-family:var(--hand);font-size:6mm;color:var(--ink2);max-width:210mm;line-height:1.7;margin-top:6mm}
-.cert .ct-why{font-family:var(--sans);font-size:3.6mm;color:var(--muted);max-width:220mm;line-height:1.6;margin-top:3mm}
-.cert .ct-end{font-family:var(--sans);font-size:4.2mm;margin-top:auto;letter-spacing:.3em}
-.cert .ct-sign{display:flex;justify-content:space-between;align-items:flex-end;width:100%;max-width:240mm;margin-top:5mm;font-family:var(--sans);font-size:4.2mm;color:var(--ink2);text-align:left}
-.cert .ct-sign b{font-family:var(--serif);font-size:5.4mm;color:var(--ink);display:block}
-.cert .ct-sign .d{text-align:right}
-.cert .ct-seal{position:absolute;right:30mm;bottom:28mm;width:26mm;height:26mm;border:1mm solid rgba(185,68,42,.75);border-radius:50%;color:rgba(185,68,42,.75);font-size:4.4mm;display:flex;align-items:center;justify-content:center;transform:rotate(-12deg);letter-spacing:.1em;font-weight:700}
-/* ceremony slideshow */
-.show{position:fixed;inset:0;z-index:80;background:#0F1730;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);overflow:hidden;cursor:pointer;user-select:none}
-.show .sh-sl{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6vh 8vw;gap:2.2vh}
-.show .sh-sl.on{display:flex;animation:shslin .5s ease}
-@keyframes shslin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.show .sh-k{font-family:var(--latin);letter-spacing:.3em;color:#E9BD45;font-size:2.2vh;text-transform:uppercase}
-.show h1{font-size:9vh;font-weight:900;line-height:1.15;color:#fff}
-.show h2{font-size:6.5vh;font-weight:900;line-height:1.2;color:#fff}
-.show .sh-sub{font-family:var(--sans);font-size:2.8vh;color:#C9CEDC;max-width:70vw;line-height:1.7}
-.show .sh-cls{font-family:var(--sans);font-size:3vh;color:#E9BD45;letter-spacing:.2em}
-.show .sh-mem{font-family:var(--sans);font-size:2.6vh;color:#C9CEDC}
-.show .sh-aw{font-size:10vh;font-weight:900;color:#F7D57A;letter-spacing:.1em;line-height:1.2;text-shadow:0 6px 30px rgba(233,189,69,.35)}
-.show .sh-cite{font-family:var(--hand);font-size:3.6vh;color:#fff;max-width:70vw;line-height:1.7}
-.show .sh-why{font-family:var(--sans);font-size:2.3vh;color:#9FA8C4;max-width:70vw;line-height:1.6}
-.show ul{font-family:var(--sans);font-size:3vh;color:#E6E9F2;text-align:left;max-width:72vw;line-height:1.75;margin:0;padding-left:1.2em}
-.show ul li+li{margin-top:1.2vh}
-.show .sh-step{visibility:hidden;opacity:0;transform:translateY(10px);transition:all .45s ease}
-.show .sh-step.in{visibility:visible;opacity:1;transform:none}
-.show .sh-nav{position:absolute;bottom:3vh;left:0;right:0;display:flex;justify-content:center;gap:12px;font-family:var(--sans);font-size:1.8vh;color:#6D7690}
-.show .sh-nav button{font:inherit;color:#C9CEDC;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 14px}
-.show .sh-pg{position:absolute;top:2.5vh;right:3vw;font-family:var(--latin);color:#6D7690;font-size:2vh;letter-spacing:.2em}
-.show .sh-ray{position:absolute;left:-10vw;top:-20vh;width:60vw;height:140vh;background:linear-gradient(100deg,rgba(247,213,122,.12),transparent 60%);transform:rotate(-12deg);pointer-events:none}
+/* library */
+.lib-folder{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.lib-folder>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:700}
+.lib-folder>summary::-webkit-details-marker{display:none}
+.lib-folder>summary .ic{width:22px;height:22px;color:var(--gold)}
+.lib-folder>summary .n{margin-left:auto;font-weight:500;color:var(--muted);font-size:.85rem}
+.lib-file{display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.lib-file .ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--latin);font-weight:600;font-size:.72rem;letter-spacing:.05em;color:#fff}
+.lib-file .ic.pdf{background:#B9442A}.lib-file .ic.pptx{background:#C8641E}.lib-file .ic.docx{background:#2748BF}.lib-file .ic.xlsx{background:#2E7A4F}.lib-file .ic.other{background:#6B7080}
+.lib-file .meta{flex:1;min-width:200px}.lib-file .meta b{display:block}.lib-file .meta span{font-size:.82rem;color:var(--muted)}
+.lib-file .row{gap:8px}
+.lib-view{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.lib-view .bar{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:.9rem}
+.lib-view .bar b{flex:1}
+.lib-view iframe{width:100%;height:78vh;border:0;background:#525659}
 /* print */
 #printRoot{display:none}
 @media print{
   body.printing>*:not(#printRoot){display:none!important}
   body.printing #printRoot{display:block}
   body.printing{background:#fff;padding:0}
-  .pr-cert{page:cert}
-  .pr-cert .cert{box-shadow:none;page-break-after:always;break-after:page}
   .pr-fb{width:190mm;margin:0 auto;page-break-after:always;break-after:page;font-size:10.5pt}
   .pr-fb .fb-card{border:0;padding:0}
   .pr-fb .fb-foot{display:none}
-  @page{size:A4;margin:12mm}
-  @page cert{size:A4 landscape;margin:0}
+  @page{margin:12mm}
 }
 </style>
 </head>
@@ -653,8 +617,7 @@ body.viewing-sample{padding-bottom:70px}
       <button type="button" role="tab" aria-selected="false" data-bk="video">開場影片</button>
       <button type="button" role="tab" aria-selected="false" data-bk="guide">操作說明</button>
       <button type="button" role="tab" aria-selected="false" data-bk="fb">成果回饋</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="cert">獎狀</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="show">頒獎簡報</button>
+      <button type="button" role="tab" aria-selected="false" data-bk="lib">檔案庫</button>
     </div>
     <div class="bk-pane" id="bk-ans" hidden>
       <div class="bk-cards">
@@ -681,7 +644,7 @@ body.viewing-sample{padding-bottom:70px}
           <li><b>整理成果：</b>在「學習歷程」完成 6 個部分；命名與檔名格式未通過時無法匯出 Word。</li>
           <li><b>收件：</b>學生的填寫內容與軌跡會自動寫入您的 Google 試算表（「成果」與「軌跡」兩個工作表）；Word 檔依檔名格式另外繳交。</li>
           <li><b>看紀錄：</b>在「學生紀錄」按「從 Google 試算表讀取」，可依日期、類型篩選；按每列的「預覽」直接看該組填寫的畫面，也能匯出該組 Word。</li>
-          <li><b>發表會：</b>「成果回饋」有各組的肯定、建議與需要再次確認的項目，可列印回饋單或下載 PDF；「獎狀」可改校名與日期後直接列印 A4 橫式獎狀；「頒獎簡報」全螢幕播放頒獎流程。這三頁的資料存在 feedback-data.js，已用教師密碼加密。</li>
+          <li><b>發表會：</b>「成果回饋」有各組的肯定、建議與需要再次確認的項目，可列印回饋單或下載 PDF；「檔案庫」依班級與日期分資料夾，放獎狀、頒獎簡報等檔案，可預覽 PDF 或下載。這兩頁的資料與檔案都已用教師密碼加密。</li>
         </ol>
         <p class="help">學生紀錄同時存在各自裝置的瀏覽器與您的試算表。請提醒學生全程使用同一台裝置與瀏覽器，不要用無痕模式。</p>
       </div>
@@ -693,24 +656,10 @@ body.viewing-sample{padding-bottom:70px}
       <div class="fb-common" id="fbCommon"></div>
       <div class="row" style="justify-content:flex-end"><button class="btn" type="button" id="fbPrintAll">列印全部回饋單</button><button class="btn blue" type="button" id="fbPdf">下載成果回饋 PDF</button></div>
     </div>
-    <div class="bk-pane" id="bk-cert" hidden>
-      <div class="cert-tools">
-        <label>校名<input id="certSchool" value="康橋國際學校 林口校區"></label>
-        <label>課程名稱<input id="certCourse" value="國中數學 相似形｜測量遠征 PBL 專題"></label>
-        <label>落款<input id="certSigner" value="指導老師　余佳霖老師"></label>
-        <label>日期<input id="certDate"></label>
-      </div>
-      <div class="fb-chips" id="certChips"></div>
-      <div class="cert-stage"><div class="cert-scale" id="certScale"></div></div>
-      <div class="row" style="justify-content:flex-end"><button class="btn" type="button" id="certPrintOne">列印這張</button><button class="btn blue" type="button" id="certPrintAll">列印全部獎狀</button></div>
-      <p class="help">列印時請選 A4 橫式、邊界「無」、勾選背景圖形。建議用 160–200 g 的米色紙。</p>
-    </div>
-    <div class="bk-pane" id="bk-show" hidden>
-      <div class="bk-card" style="align-items:stretch">
-        <h3>頒獎儀式簡報</h3>
-        <p class="help">開場 → 全班亮點 → 逐組頒獎（先出現組名，再按一下揭曉獎項與頒獎詞）→ 共同提醒 → 結尾。鍵盤 ← → 或點畫面切換，Esc 離開。</p>
-        <div class="row"><button class="btn blue" type="button" id="showStart">全螢幕播放</button><span class="help" id="showCount"></span></div>
-      </div>
+    <div class="bk-pane" id="bk-lib" hidden>
+      <p class="help" id="libMsg">檔案已用教師密碼加密存放在網站上，登入後才解得開。點「預覽」在頁面內看 PDF，點「下載」存到電腦。</p>
+      <div id="libFolders" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div class="lib-view" id="libView" hidden><div class="bar"><b id="libViewName"></b><button class="btn sm" type="button" id="libViewDl">下載</button><button class="btn sm" type="button" id="libViewClose">關閉預覽</button></div><iframe id="libFrame" title="檔案預覽"></iframe></div>
     </div>
     <div class="bk-pane" id="bk-rec">
     <div class="row" style="align-items:center"><button class="btn blue" type="button" id="trailLoad">從 Google 試算表讀取</button><a class="btn" id="trailSheet" href="#" target="_blank" rel="noopener" hidden>開啟試算表</a></div>
@@ -727,10 +676,10 @@ body.viewing-sample{padding-bottom:70px}
 </div>
 <div class="toast" id="toast" hidden></div>
 <div id="printRoot"></div>
-<div class="show" id="showOv" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.iife.js"></script>
 <script src="feedback-data.js"></script>
+<script src="library.js"></script>
 <script>
 (function(){
 "use strict";
@@ -1480,8 +1429,8 @@ $("#tDlg").addEventListener("click",e=>{if(e.target.id==="tDlg")closeT();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#tDlg").hidden)closeT();});
 $("#tSample").addEventListener("click",()=>{$("#trailView").hidden=true;enterSample();viewFrom="trail";});
 $("#tSampleDocx").addEventListener("click",()=>{$("#trailView").hidden=true;sampleDocx();viewFrom="trail";});
-$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; FB=null; renderFB(); renderCert(); tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
-function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","video","guide","fb","cert","show"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k==="cert")fitCert();if(k!=="video"){const v=$("#bkVid");if(v)v.pause();}}
+$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; FB=null; LIB=null; renderFB(); renderLib(); tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
+function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","video","guide","fb","lib"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="video"){const v=$("#bkVid");if(v)v.pause();}}
 $$(".bk-tabs button").forEach(b=>b.addEventListener("click",()=>bkTab(b.dataset.bk)));
 {const v=$("#bkVid");
  v.addEventListener("error",()=>{$("#bkVidMiss").hidden=false;});
@@ -1649,7 +1598,7 @@ async function unlockFB(pw){
     const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},key,b64d(L.c));
     FB=JSON.parse(new TextDecoder().decode(pt)); fbSel=0; certSel=0;
   }catch(e){ $("#fbMsg").textContent="回饋資料的加密密碼和登入密碼不一致，無法解開。"; }
-  renderFB(); renderCert(); $("#showCount").textContent=FB?`共 ${FB.groups.length} 組，${slidesOf().length} 張投影片。`:"";
+  renderFB(); unlockLib(pw);
 }
 const gLabel=g=>`${g.cls} ${g.no}｜${g.name}`;
 function chips(el,sel,onPick){
@@ -1686,51 +1635,47 @@ function printWith(html,cls){
 function printFB(idx){ if(!FB)return; printWith(idx.map(i=>`<div class="pr-fb">${fbCardHTML(FB.groups[i])}</div>`).join(""),""); }
 $("#fbPrintAll").addEventListener("click",()=>FB&&printFB(FB.groups.map((_,i)=>i)));
 $("#fbPdf").addEventListener("click",()=>{ if(!FB)return; const a=document.createElement("a"); a.href="data:application/pdf;base64,"+FB.pdf; a.download=FB.pdfName||"成果回饋.pdf"; a.click(); });
-/* certificates */
-(function(){const d=new Date();$("#certDate").value=`中華民國 ${d.getFullYear()-1911} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日`;})();
-function certHTML(g){
-  return `<div class="cert"><i class="ct-corner ct-c1"></i><i class="ct-corner ct-c2"></i><i class="ct-corner ct-c3"></i><i class="ct-corner ct-c4"></i>
-  <div class="latin">Certificate of Achievement</div><div class="ct-title">獎狀</div><div class="ct-rule"></div>
-  <div class="ct-who">${esc(g.cls)} 第 ${esc(g.no.replace(/[^0-9]/g,""))} 組　${esc(g.name)}<small>${esc(g.members)}</small></div>
-  <div class="ct-award">於「${esc($("#certCourse").value)}」成果發表中榮獲<b>${esc(g.award)}</b></div>
-  <div class="ct-cite">${esc(g.cite)}</div><div class="ct-why">${esc(g.why)}</div>
-  <div class="ct-end">特頒此狀　以資鼓勵</div>
-  <div class="ct-sign"><div><b>${esc($("#certSchool").value)}</b>${esc($("#certSigner").value)}</div><div class="d">${esc($("#certDate").value)}</div></div>
-  <div class="ct-seal">測量遠征</div></div>`;
+/* library (files/*.enc, AES-GCM with the teacher password; manifest in library.js) */
+let LIB=null, libKey=null, libUrls={};
+async function unlockLib(pw){
+  LIB=null; libKey=null; Object.values(libUrls).forEach(u=>URL.revokeObjectURL(u)); libUrls={};
+  try{
+    const L=window.LIB_LOCK; if(!L){$("#libMsg").textContent="找不到 library.js，請和本頁一起上傳到 GitHub 同一個資料夾。";renderLib();return;}
+    const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+    libKey=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(L.s),iterations:L.n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},libKey,b64d(L.c));
+    LIB=JSON.parse(new TextDecoder().decode(pt));
+  }catch(e){ $("#libMsg").textContent="檔案庫的加密密碼和登入密碼不一致，無法解開。"; }
+  renderLib();
 }
-function renderCert(){ chips($("#certChips"),certSel,i=>{certSel=i;renderCert();}); $("#certScale").innerHTML=FB?certHTML(FB.groups[certSel]):""; fitCert(); }
-function fitCert(){ const st=$(".cert-stage"), sc=$("#certScale"); if(!st||!sc||!sc.firstChild)return; const w=st.clientWidth-32, cw=sc.firstChild.offsetWidth, ch=sc.firstChild.offsetHeight, k=Math.min(1,w/cw); sc.style.transform=`scale(${k})`; sc.style.width=cw+"px"; sc.style.height=ch+"px"; st.style.height=(ch*k+32)+"px"; }
-window.addEventListener("resize",fitCert);
-["certSchool","certCourse","certSigner","certDate"].forEach(id=>$("#"+id).addEventListener("input",()=>{ if(FB)$("#certScale").innerHTML=certHTML(FB.groups[certSel]); }));
-$("#certPrintOne").addEventListener("click",()=>FB&&printWith(certHTML(FB.groups[certSel]),"pr-cert"));
-$("#certPrintAll").addEventListener("click",()=>FB&&printWith(FB.groups.map(certHTML).join(""),"pr-cert"));
-/* ceremony slideshow */
-function slidesOf(){
-  if(!FB)return [];
-  const S=[];
-  S.push(`<div class="sh-k">Measure Quest · Award Ceremony</div><h1>測量遠征<br>成果發表與頒獎</h1><p class="sh-sub">一束光，丈量一個世界——相似三角形的生活測量</p>`);
-  S.push(`<div class="sh-k">What we did well</div><h2>全班都做到的</h2><ul>${FB.common_praise.map(x=>`<li class="sh-step">${esc(x)}</li>`).join("")}</ul>`);
-  FB.groups.forEach(g=>{
-    S.push(`<div class="sh-k">Award</div><div class="sh-cls">${esc(g.cls)} 第 ${esc(g.no.replace(/[^0-9]/g,""))} 組</div><h2>${esc(g.name)}</h2><div class="sh-mem">${esc(g.members)}</div>
-      <div class="sh-aw step">${esc(g.award)}</div><div class="sh-cite step">${esc(g.cite)}</div><div class="sh-why step">${esc(g.why)}</div>`);
-  });
-  S.push(`<div class="sh-k">Keep in mind</div><h2>下一次，我們一起做得更好</h2><ul>${FB.common_advice.map(x=>`<li class="sh-step">${esc(x)}</li>`).join("")}</ul>`);
-  S.push(`<div class="sh-k">Thank you</div><h1>謝謝每一組的測量遠征</h1><p class="sh-sub">答案算出來不是終點，用另一種方法證明它，才是科學家的態度。</p>`);
-  return S;
+const fmtSize=n=>n>1048576?(n/1048576).toFixed(1)+" MB":Math.round(n/1024)+" KB";
+const MIME={pdf:"application/pdf",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+function renderLib(){
+  const el=$("#libFolders"); $("#libView").hidden=true;
+  if(!LIB){el.innerHTML="";return;}
+  el.innerHTML=LIB.folders.map((f,fi)=>`<details class="lib-folder" ${fi===0?"open":""}><summary><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${esc(f.name)}<span class="n">${f.files.length} 個檔案</span></summary>
+    ${f.files.map((x,i)=>`<div class="lib-file"><div class="ic ${MIME[x.type]?x.type:"other"}">${esc(x.type.toUpperCase())}</div><div class="meta"><b>${esc(x.name)}</b><span>${fmtSize(x.size)}${x.note?" · "+esc(x.note):""}</span></div>
+      <div class="row">${x.type==="pdf"?`<button class="btn sm" type="button" data-lib="view" data-f="${fi}" data-i="${i}">預覽</button>`:""}<button class="btn sm blue" type="button" data-lib="dl" data-f="${fi}" data-i="${i}">下載</button></div></div>`).join("")}
+  </details>`).join("");
+  qa("[data-lib]",el).forEach(b=>b.addEventListener("click",()=>libAct(b.dataset.lib,LIB.folders[+b.dataset.f].files[+b.dataset.i],b)));
 }
-let showI=0;
-function showGo(n){ const sl=qa("#showOv .sh-sl"); if(!sl.length)return; showI=Math.max(0,Math.min(sl.length-1,n)); sl.forEach((e,i)=>e.classList.toggle("on",i===showI)); $("#showOv .sh-pg").textContent=`${showI+1} / ${sl.length}`; }
-function showNext(){ const cur=qa("#showOv .sh-sl")[showI]; const st=cur&&qa(".sh-step:not(.in)",cur); if(st&&st.length){st[0].classList.add("in");return;} showGo(showI+1); }
-function showPrev(){ const cur=qa("#showOv .sh-sl")[showI]; const st=cur&&qa(".sh-step.in",cur); if(st&&st.length){st[st.length-1].classList.remove("in");return;} showGo(showI-1); }
-function showClose(){ $("#showOv").hidden=true; $("#showOv").innerHTML=""; if(document.fullscreenElement)document.exitFullscreen().catch(()=>{}); }
-$("#showStart").addEventListener("click",()=>{
-  if(!FB)return; const ov=$("#showOv");
-  ov.innerHTML=`<div class="sh-ray"></div>`+slidesOf().map(h=>`<section class="sh-sl">${h}</section>`).join("")+`<div class="sh-pg"></div><div class="sh-nav"><button type="button" data-nav="prev">← 上一張</button><button type="button" data-nav="next">下一張 →</button><button type="button" data-nav="close">離開</button></div>`;
-  ov.hidden=false; showGo(0); ov.requestFullscreen&&ov.requestFullscreen().catch(()=>{});
-});
-$("#showOv").addEventListener("click",e=>{ const b=e.target.closest("[data-nav]"); if(b){e.stopPropagation(); ({prev:showPrev,next:showNext,close:showClose})[b.dataset.nav](); return;} showNext(); });
-document.addEventListener("keydown",e=>{ if($("#showOv").hidden)return; if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){e.preventDefault();showNext();} else if(e.key==="ArrowLeft"){e.preventDefault();showPrev();} else if(e.key==="Escape"){showClose();} });
-document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement&&!$("#showOv").hidden)showClose(); });
+async function libBlobUrl(x,btn){
+  if(libUrls[x.id])return libUrls[x.id];
+  const old=btn&&btn.textContent; if(btn){btn.disabled=true;btn.textContent="解密中…";}
+  try{
+    const r=await fetch(x.path,{cache:"force-cache"}); if(!r.ok)throw new Error("fetch");
+    const buf=new Uint8Array(await r.arrayBuffer());
+    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:buf.slice(0,12)},libKey,buf.slice(12));
+    const url=URL.createObjectURL(new Blob([pt],{type:MIME[x.type]||"application/octet-stream"})); libUrls[x.id]=url; return url;
+  }catch(e){ toast("無法開啟這個檔案，請確認 files 資料夾已一起上傳。"); return null; }
+  finally{ if(btn){btn.disabled=false;btn.textContent=old;} }
+}
+async function libAct(act,x,btn){
+  const url=await libBlobUrl(x,btn); if(!url)return;
+  if(act==="dl"){ const a=document.createElement("a"); a.href=url; a.download=x.name; a.click(); return; }
+  $("#libViewName").textContent=x.name; $("#libFrame").src=url; $("#libView").hidden=false; $("#libViewDl").onclick=()=>{const a=document.createElement("a");a.href=url;a.download=x.name;a.click();}; $("#libView").scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("#libViewClose").addEventListener("click",()=>{$("#libView").hidden=true;$("#libFrame").src="about:blank";});
 
 })();
 </script>
