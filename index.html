@@ -301,6 +301,10 @@ body.viewing-sample{padding-bottom:70px}
 .tf .chip{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink2);cursor:pointer}
 .tf .chip b{font-weight:700;margin-left:4px;font-variant-numeric:tabular-nums}
 .tf .chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tf-days{display:flex;align-items:flex-start;gap:10px;width:100%;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.tf-k{font-size:.85rem;color:var(--muted);padding-top:6px;white-space:nowrap}
+.tf .chip.more{border-style:dashed;color:var(--blue-deep)}
+.tf .chip.recent{font-weight:700}
 .trail-tbl tr.dhead td{background:var(--paper);font-weight:700;color:var(--ink);cursor:default;padding-top:14px}
 .trail-tbl tr.dhead:hover{background:var(--paper)}
 .trail-tbl tr.dhead span{font-weight:400;color:var(--muted);margin-left:8px;font-size:.82rem}
@@ -754,7 +758,7 @@ body.viewing-sample{padding-bottom:70px}
     <div class="row" style="align-items:center"><button class="btn blue" type="button" id="trailLoad">從 Google 試算表讀取</button><a class="btn" id="trailSheet" href="#" target="_blank" rel="noopener" hidden>開啟試算表</a></div>
     <p class="help" id="trailMsg">按「從 Google 試算表讀取」取得全班最新資料。每一台學生裝置為一列。</p>
     <div class="tf" id="trailFilter" hidden>
-      <label>日期 <select id="tfDate"></select></label>
+      <div class="tf-days"><span class="tf-k">日期</span><div class="chips" role="group" aria-label="日期篩選" id="tfDate"></div></div>
       <div class="chips" role="group" aria-label="類型篩選" id="tfType"></div>
       <label>搜尋 <input id="tfQ" type="search" placeholder="班級、組名或裝置"></label>
     </div>
@@ -1555,7 +1559,9 @@ function cloudStats(x){
     hints:+sn.hints||0,verify:L.filter(e=>e.k==="verify").length,paste:L.filter(e=>e.k==="paste"),draft:L.filter(e=>e.k==="draft").length,
     tasks:sn.tasks||{},taskHints:sn.taskHints||{},progress:sn.progress};
 }
-let tfDate="", tfType="all", tfQ="";
+let tfDate="r3", tfType="all", tfQ="", tfMore=false;
+const R3_FROM=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-2);return dayKey(d);};
+const inDay=(k,sel)=>sel==="r3"?k>=R3_FROM():k===sel;
 const BROWSE_MS=60000;
 const dayKey=t=>{const d=new Date(t);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
 const dayLabel=k=>{const d=new Date(k+"T00:00:00");return d.toLocaleDateString("zh-TW",{year:"numeric",month:"2-digit",day:"2-digit",weekday:"short"});};
@@ -1565,13 +1571,21 @@ const KIND_TAG={work:'<span class="tag work">有填寫</span>',idle:'<span class
 function renderTrailFilter(){
   const box=$("#trailFilter"); box.hidden=!trailSubs.length; if(!trailSubs.length) return;
   const days=[...new Set(trailSubs.flatMap(x=>x.ts.L.map(e=>dayKey(e.t))))].sort().reverse();
-  if(tfDate&&!days.includes(tfDate)) tfDate="";
-  $("#tfDate").innerHTML=`<option value="">全部日期</option>`+days.map(k=>`<option value="${k}" ${k===tfDate?"selected":""}>${dayLabel(k)}</option>`).join("");
-  const pool=trailSubs.filter(x=>!tfDate||x.ts.L.some(e=>dayKey(e.t)===tfDate));
+  if(tfDate&&tfDate!=="r3"&&!days.includes(tfDate)) tfDate="r3";
+  const cnt=sel=>trailSubs.filter(x=>!sel||x.ts.L.some(e=>inDay(dayKey(e.t),sel))).length;
+  const from=R3_FROM(), recent=days.filter(k=>k>=from), older=days.filter(k=>k<from);
+  const short=k=>{const d=new Date(k+"T00:00:00");return `${d.getMonth()+1}/${d.getDate()}（${"日一二三四五六"[d.getDay()]}）`;};
+  const chip=(v,l,cls="")=>`<button type="button" class="chip ${cls}" data-d="${v}" aria-pressed="${tfDate===v}">${l}<b>${cnt(v)}</b></button>`;
+  const showOlder=tfMore||older.includes(tfDate);
+  $("#tfDate").innerHTML=chip("r3","最近三天","recent")+recent.map(k=>chip(k,short(k))).join("")
+    +(older.length?(showOlder?older.map(k=>chip(k,short(k))).join("")+`<button type="button" class="chip more" data-more="0">收合較早日期</button>`:`<button type="button" class="chip more" data-more="1">更早的日期（${older.length} 天）▾</button>`):"")
+    +chip("","全部日期");
+  $$("#tfDate .chip[data-d]").forEach(b=>b.addEventListener("click",()=>{tfDate=b.dataset.d;trailSel=null;renderTrailList();}));
+  $$("#tfDate .chip[data-more]").forEach(b=>b.addEventListener("click",()=>{tfMore=b.dataset.more==="1";renderTrailFilter();}));
+  const pool=trailSubs.filter(x=>!tfDate||x.ts.L.some(e=>inDay(dayKey(e.t),tfDate)));
   $("#tfType").innerHTML=KINDS.map(([k,l])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${tfType===k}">${l}<b>${k==="all"?pool.length:pool.filter(x=>kindOf(x)===k).length}</b></button>`).join("");
   $$("#tfType .chip").forEach(b=>b.addEventListener("click",()=>{tfType=b.dataset.k;renderTrailList();}));
 }
-$("#tfDate").addEventListener("change",e=>{tfDate=e.target.value;renderTrailList();});
 $("#tfQ").addEventListener("input",e=>{tfQ=e.target.value.trim().toLowerCase();renderTrailList();});
 function renderTrailList(){
   const el=$("#trailList");
@@ -1579,7 +1593,7 @@ function renderTrailList(){
   if(!trailSubs.length){el.innerHTML=`<tbody><tr><td style="cursor:default;color:var(--muted)">尚無資料。</td></tr></tbody>`;$("#trailDetail").innerHTML="";return;}
   // 最新活動在最上面
   trailSubs.sort((a,b)=>(b.ts.last||0)-(a.ts.last||0));
-  const lastOn=x=>{if(!tfDate)return x.ts.last;const L=x.ts.L.filter(e=>dayKey(e.t)===tfDate);const e=L[L.length-1];return e?(e.t2||e.t):0;};
+  const lastOn=x=>{if(!tfDate)return x.ts.last;const L=x.ts.L.filter(e=>inDay(dayKey(e.t),tfDate));const e=L[L.length-1];return e?(e.t2||e.t):0;};
   const rows=trailSubs.map((x,i)=>({x,i,lt:lastOn(x)})).filter(({x,lt})=>{
     if(tfDate&&!lt) return false;
     if(tfType!=="all"&&kindOf(x)!==tfType) return false;
@@ -1591,7 +1605,7 @@ function renderTrailList(){
     if(k!==cur){cur=k;const n=rows.filter(r=>dayKey(r.lt||0)===k).length;body+=`<tr class="dhead"><td colspan="${COLS}">${lt?dayLabel(k):"沒有時間紀錄"}<span>${n} 台裝置</span></td></tr>`;}
     const s=x.ts,g=x.g||{};
     body+=`<tr data-i="${i}" class="${trailSel===x.dev?"sel":""}" tabindex="0"><td>${KIND_TAG[kindOf(x)]}</td><td>${esc(g.klass||"未填")}</td><td>${esc(g.no||"")}</td><td>${esc(g.name||"未命名")}</td><td>${esc(x.dev)}</td><td>${lt?new Date(lt).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit",hour12:false}):"–"}</td><td>${s.days.length}</td><td>${s.sessions}</td><td>${mins(s.active)}</td><td>${s.progress!=null?s.progress+"%":"–"}</td><td>${s.hints}</td><td>${s.verify}</td><td class="${s.paste.length?"flag-p":""}">${s.paste.length}</td><td class="${s.draft?"flag-p":""}">${s.draft}</td><td>${TASKS.map(t=>s.tasks[t.id]??0).join(" / ")}</td><td>${x.snap?`<button class="btn sm pv" type="button" data-pv="${i}">預覽</button>`:`<span class="help">—</span>`}</td></tr>`;});
-  if(!rows.length) body=`<tr class="dhead"><td colspan="${COLS}" style="color:var(--muted);font-weight:400">沒有符合篩選條件的紀錄。</td></tr>`;
+  if(!rows.length) body=`<tr class="dhead"><td colspan="${COLS}" style="color:var(--muted);font-weight:400">${tfDate==="r3"?"最近三天沒有活動紀錄。點上方的日期或「更早的日期」查看之前的紀錄。":"沒有符合篩選條件的紀錄。"}</td></tr>`;
   el.innerHTML=`<thead><tr><th>類型</th><th>班級</th><th>組別</th><th>組名</th><th>裝置</th><th>最後活動</th><th>天數</th><th>階段數</th><th>投入時間</th><th>完成度</th><th>提示</th><th>驗算</th><th>貼上≥20字</th><th>帶入草稿</th><th>任務階段</th><th>學生畫面</th></tr></thead><tbody>${body}</tbody>`;
   $$("#trailList .pv").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const x=trailSubs[+b.dataset.pv];trailSel=x.dev;renderTrailList();openStudentView(x);}));
   $$("#trailList tbody tr[data-i]").forEach(tr=>{const go=()=>{trailSel=trailSubs[+tr.dataset.i].dev;renderTrailList();$("#trailDetail").scrollIntoView({behavior:"smooth",block:"start"});};tr.addEventListener("click",go);tr.addEventListener("keydown",e=>{if(e.key==="Enter")go();});});
