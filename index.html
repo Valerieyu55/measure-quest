@@ -475,7 +475,7 @@ body.viewing-sample{padding-bottom:70px}
 .fl-wide{grid-column:1/-1}
 .fl-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .fl-ic{width:42px;height:50px;border-radius:4px 12px 4px 4px;display:grid;place-items:center;color:#fff;font-family:var(--latin);font-weight:600;font-size:.78rem;letter-spacing:.06em;flex:none;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14)}
-.k-pdf{background:#B9442A}.k-pptx{background:#C8641E}.k-docx{background:var(--blue)}.k-xlsx{background:var(--green)}.k-video{background:var(--ink)}.k-feedback{background:var(--gold)}.k-image,.k-other{background:#6B7080}
+.k-html{background:#2C4FC4}.k-pdf{background:#B9442A}.k-pptx{background:#C8641E}.k-docx{background:var(--blue)}.k-xlsx{background:var(--green)}.k-video{background:var(--ink)}.k-feedback{background:var(--gold)}.k-image,.k-other{background:#6B7080}
 .fl-t{flex:1;min-width:180px}
 .fl-t b{display:block;font-family:var(--serif);font-weight:900;font-size:1.06rem;line-height:1.35;color:var(--ink)}
 .fl-t span{font-size:.8rem;color:var(--muted)}
@@ -720,7 +720,7 @@ body.viewing-sample{padding-bottom:70px}
       <div class="bk-tabs" role="tablist" aria-label="後台功能">
       <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec"><span class="n">01</span><span><b>學生紀錄</b><small>全班填寫內容與軌跡</small></span></button>
       <button type="button" role="tab" class="" aria-selected="false" data-bk="ans"><span class="n">02</span><span><b>擬答範例</b><small>示範答案與擬答 Word</small></span></button>
-      <button type="button" role="tab" class="" aria-selected="false" data-bk="cls"><span class="n">03</span><span><b>班級資料夾</b><small>影片、回饋、獎狀、簡報、照片</small></span></button>
+      <button type="button" role="tab" class="" aria-selected="false" data-bk="cls"><span class="n">03</span><span><b>班級資料夾</b><small>公告、報告、批改、簡報、獎狀、照片影片</small></span></button>
       <button type="button" role="tab" class="" aria-selected="false" data-bk="guide"><span class="n">04</span><span><b>操作說明</b><small>從課前到發表會</small></span></button>
       </div>
       <p class="bk-side-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span>擬答與班級資料夾都以教師密碼加密，學生看不到。</span></p>
@@ -749,7 +749,7 @@ body.viewing-sample{padding-bottom:70px}
           <li><b>整理成果：</b>在「學習歷程」完成 6 個部分；命名與檔名格式未通過時無法匯出 Word。</li>
           <li><b>收件：</b>學生的填寫內容與軌跡會自動寫入您的 Google 試算表（「成果」與「軌跡」兩個工作表）；Word 檔依檔名格式另外繳交。</li>
           <li><b>看紀錄：</b>在「學生紀錄」按「從 Google 試算表讀取」，可依日期、類型篩選；按每列的「預覽」直接看該組填寫的畫面，也能匯出該組 Word。</li>
-          <li><b>班級資料夾：</b>每個班級（場次）一個資料夾，依「開場影片、成果回饋、獎狀、頒獎簡報、照片、影片」分區。開場影片可全螢幕投影；成果回饋可逐組檢視、列印回饋單或下載 PDF；獎狀 PDF 可頁內預覽；簡報與其他檔案可下載。資料夾內容已用教師密碼加密（目錄在 library.js，檔案在 files/）。要新增班級或補照片影片，把檔案與資料夾名稱交給 Claude 處理。</li>
+          <li><b>班級資料夾：</b>每個班級（場次）一個資料夾，依「課程公告、學生報告、批改與回饋、學生簡報、開場影片、頒獎簡報、獎狀、照片、影片、教學亮點」分區。開場影片可全螢幕投影；成果回饋可逐組檢視、列印回饋單或下載 PDF；獎狀 PDF 可頁內預覽；簡報與其他檔案可下載。資料夾內容已用教師密碼加密（目錄在 library.js，檔案在 files/）。要新增班級或補照片影片，把檔案與資料夾名稱交給 Claude 處理。</li>
         </ol>
         <p class="help">學生紀錄同時存在各自裝置的瀏覽器與您的試算表。請提醒學生全程使用同一台裝置與瀏覽器，不要用無痕模式。</p>
       </div>
@@ -772,7 +772,7 @@ body.viewing-sample{padding-bottom:70px}
 <div id="printRoot"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.iife.js"></script>
-<script src="library.js?v=7fe07819"></script>
+<script src="library.js?v=978688cb"></script>
 <script>
 (function(){
 "use strict";
@@ -1686,8 +1686,8 @@ if(CLOUD) setTimeout(()=>flush(false),3000);
 trackPaste($("#workspace"),()=>S.cur); trackPaste($("#portfolio"),()=>"portfolio"); trackPaste($("#thales"),()=>"thales");
 /* ---------- teacher: 班級資料夾 (manifest in library.js; files in files/*.enc; AES-GCM with the teacher password) ---------- */
 let LIB=null, libKey=null, libUrls={}, libJson={}, clsSel=0, fbSel=0;
-const CATS=["開場影片","成果回饋","獎狀","頒獎簡報","照片","影片","其他"];
-const MIME={pdf:"application/pdf",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",mp4:"video/mp4",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp"};
+const CATS=["課程公告","學生報告","批改與回饋","學生簡報","開場影片","頒獎簡報","獎狀","照片","影片","教學亮點","其他"];
+const MIME={pdf:"application/pdf",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",mp4:"video/mp4",html:"text/html;charset=utf-8",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp"};
 const fmtSize=n=>!n?"":n>1048576?(n/1048576).toFixed(1)+" MB":Math.round(n/1024)+" KB";
 function qa(sel,root){return [...(root||document).querySelectorAll(sel)];}
 function clsPause(){qa("#bk-cls video").forEach(v=>v.pause());}
@@ -1722,11 +1722,11 @@ async function libUrl(x,btn){
 function dl(url,name){const a=document.createElement("a");a.href=url;a.download=name;a.click();}
 const BK_META={rec:["01","Student Records","學生紀錄","從 Google 試算表讀取全班每台裝置的填寫內容與軌跡；點一列可預覽該組的畫面，也能匯出 Word。"],
  ans:["02","Sample Answers","擬答範例","用學生看到的版面檢視完整示範答案，或直接下載擬答版學習歷程 Word。"],
- cls:["03","Class Folders","班級資料夾","每個班級（場次）一個資料夾，依類別收好開場影片、成果回饋、獎狀、頒獎簡報與照片影片。"],
+ cls:["03","Class Folders","班級資料夾","每個班級（場次）一個資料夾：課程公告、學生報告、批改與回饋、學生簡報、發表會影片與簡報、獎狀、照片，以及教學亮點。"],
  guide:["04","Teacher Guide","操作說明","從課前分享網址，到實地測量、收件與發表會的完整流程。"]};
 function setBkHero(k){const m=BK_META[k];if(!m)return;$("#bkHeroN").textContent=m[0];$("#bkHeroEn").textContent=m[1];$("#trailT").textContent=m[2];$("#bkHeroD").textContent=m[3];}
-const CAT_EN={"開場影片":"Opening Film","成果回饋":"Feedback","獎狀":"Certificates","頒獎簡報":"Ceremony Slides","照片":"Photos","影片":"Videos","其他":"Others"};
-const KIND_LBL={pdf:"PDF",pptx:"PPT",docx:"DOC",xlsx:"XLS",video:"MP4",feedback:"FB",image:"IMG"};
+const CAT_EN={"課程公告":"Announcements","學生報告":"Student Reports","批改與回饋":"Grading & Feedback","學生簡報":"Student Slides","開場影片":"Opening Film","頒獎簡報":"Ceremony Slides","獎狀":"Certificates","照片":"Photos","影片":"Videos","教學亮點":"Teaching Spotlight","其他":"Others"};
+const KIND_LBL={pdf:"PDF",pptx:"PPT",docx:"DOC",xlsx:"XLS",video:"MP4",feedback:"FB",image:"IMG",html:"WEB"};
 const FOLDER_SVG='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
 function folderParts(n){const p=String(n).split("-");if(p.length>=4)return{term:p[0]+"-"+p[1],cls:p.slice(2,-1).join("-"),date:p[p.length-1]};return{term:"",cls:n,date:""};}
 function itemCard(x,fi,ii){
@@ -1735,7 +1735,7 @@ function itemCard(x,fi,ii){
   if(x.kind==="video")return `<div class="fl fl-wide fl-video">${head(`<div class="fl-act">${x.enc?`<button class="btn" type="button" data-act="vload" ${id}>載入影片</button>`:""}<button class="btn blue" type="button" data-act="vfull" ${id}>全螢幕播放</button><button class="btn" type="button" data-act="vrestart" ${id}>從頭播放</button></div>`)}<div class="vbox"><video controls playsinline preload="metadata" ${x.enc?"":`src="${esc(x.path)}"`}></video><div class="vmiss" hidden><b>還沒載入</b><span>按「載入影片」解密後播放。</span></div></div></div>`;
   if(x.kind==="feedback")return `<div class="fl fl-wide">${head(`<div class="fl-act"><button class="btn blue" type="button" data-act="fbopen" ${id}>開啟成果回饋</button></div>`)}<div class="cls-fb" hidden></div></div>`;
   if(x.kind==="image")return `<figure class="cls-img" ${id}><div class="ph"></div><figcaption>${esc(x.name)}</figcaption></figure>`;
-  return `<div class="fl">${head()}<div class="fl-act">${x.kind==="pdf"?`<button class="btn" type="button" data-act="view" ${id}>預覽</button>`:""}<button class="btn blue" type="button" data-act="dl" ${id}>下載</button></div></div>`;
+  return `<div class="fl${x.wide?" fl-wide":""}">${head()}<div class="fl-act">${x.kind==="pdf"||x.kind==="html"?`<button class="btn" type="button" data-act="view" ${id}>預覽</button>`:""}${x.kind==="html"?`<button class="btn" type="button" data-act="open" ${id}>新分頁開啟</button>`:""}<button class="btn blue" type="button" data-act="dl" ${id}>下載</button></div></div>`;
 }
 function renderCls(){
   const el=$("#clsBody"), chips=$("#clsChips"); $("#libView").hidden=true; clsPause();
@@ -1747,7 +1747,7 @@ function renderCls(){
   qa("button.fd",chips).forEach(b=>b.addEventListener("click",()=>{clsSel=+b.dataset.i;renderCls();}));
   const f=LIB.folders[clsSel], fi=clsSel, p=folderParts(f.name);
   const filled=CATS.filter(cat=>f.items.some(x=>(x.cat||"其他")===cat)), empty=CATS.filter(c=>c!=="其他"&&!filled.includes(c));
-  let html=`<div class="fd-band"><div><div class="bk-chapter">FOLDER${p.term?" · "+esc(p.term):""}</div><h3>${esc(p.cls)}${p.date?`<span>${esc(p.date)}</span>`:""}</h3></div><div class="prog">${CATS.filter(c=>c!=="其他").map(c=>`<i class="${filled.includes(c)?"on":""}" title="${esc(c)}"></i>`).join("")}<span>${filled.filter(c=>c!=="其他").length}／6 類已放入</span></div></div>`;
+  let html=`<div class="fd-band"><div><div class="bk-chapter">FOLDER${p.term?" · "+esc(p.term):""}</div><h3>${esc(p.cls)}${p.date?`<span>${esc(p.date)}</span>`:""}</h3></div><div class="prog">${CATS.filter(c=>c!=="其他").map(c=>`<i class="${filled.includes(c)?"on":""}" title="${esc(c)}"></i>`).join("")}<span>${filled.filter(c=>c!=="其他").length}／${CATS.length-1} 類已放入</span></div></div>`;
   html+=filled.map(cat=>{
     const items=f.items.map((x,ii)=>[x,ii]).filter(([x])=>(x.cat||"其他")===cat);
     const isImg=items.every(([x])=>x.kind==="image"), n=String(CATS.indexOf(cat)+1).padStart(2,"0");
@@ -1764,6 +1764,7 @@ async function clsAct(act,x,btn){
   if(act==="vfull"){const v=card.querySelector("video");if(!v.src){if(x.enc){const u=await libUrl(x,btn);if(!u)return;v.src=u;}}try{await (v.requestFullscreen?v.requestFullscreen():v.webkitEnterFullscreen&&v.webkitEnterFullscreen());}catch(e){}v.play().catch(()=>{});return;}
   if(act==="vrestart"){const v=card.querySelector("video");v.currentTime=0;v.play().catch(()=>{});return;}
   if(act==="dl"){const u=await libUrl(x,btn);if(u)dl(u,x.name);return;}
+  if(act==="open"){const w=window.open("about:blank","_blank");const u=await libUrl(x,btn);if(u&&w)w.location.href=u;else if(w)w.close();return;}
   if(act==="view"){const u=await libUrl(x,btn);if(!u)return;$("#libViewName").textContent=x.name;$("#libFrame").src=u;$("#libView").hidden=false;$("#libViewDl").onclick=()=>dl(u,x.name);$("#libView").scrollIntoView({behavior:"smooth",block:"start"});return;}
   if(act==="fbopen"){const box=card.querySelector(".cls-fb");if(!box.hidden){box.hidden=true;btn.textContent="開啟成果回饋";return;}
     let FB=libJson[x.path]; if(!FB){const b=await libBytes(x,btn);if(!b)return;FB=JSON.parse(new TextDecoder().decode(b));libJson[x.path]=FB;}
