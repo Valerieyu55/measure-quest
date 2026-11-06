@@ -370,17 +370,18 @@ body.viewing-sample{padding-bottom:70px}
 .fb-foot{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px}
 .fb-common{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:760px){.fb-common{grid-template-columns:1fr}}
-/* library */
-.lib-folder{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.lib-folder>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:700}
-.lib-folder>summary::-webkit-details-marker{display:none}
-.lib-folder>summary .ic{width:22px;height:22px;color:var(--gold)}
-.lib-folder>summary .n{margin-left:auto;font-weight:500;color:var(--muted);font-size:.85rem}
-.lib-file{display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
-.lib-file .ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--latin);font-weight:600;font-size:.72rem;letter-spacing:.05em;color:#fff}
-.lib-file .ic.pdf{background:#B9442A}.lib-file .ic.pptx{background:#C8641E}.lib-file .ic.docx{background:#2748BF}.lib-file .ic.xlsx{background:#2E7A4F}.lib-file .ic.other{background:#6B7080}
-.lib-file .meta{flex:1;min-width:200px}.lib-file .meta b{display:block}.lib-file .meta span{font-size:.82rem;color:var(--muted)}
-.lib-file .row{gap:8px}
+/* class folders */
+.cls-cat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.cls-cat h3{font-size:1.05rem;display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cls-cat h3 span{font-family:var(--latin);font-size:.9rem;color:var(--muted);font-weight:500}
+.cls-cat.empty{background:transparent;border-style:dashed;padding:10px 18px;gap:2px}
+.cls-cat.empty h3{border:0;padding:0;color:var(--muted);font-size:.95rem}
+.cls-cat .bk-card{background:var(--paper)}
+.cls-fb{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.cls-cat .bk-card:has(.cls-fb),.cls-cat .bk-card.cls-video{grid-column:1/-1}
+.cls-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.cls-img{margin:0;cursor:pointer}.cls-img .ph{aspect-ratio:4/3;background:var(--paper);border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.8rem}
+.cls-img img{width:100%;height:100%;object-fit:cover}.cls-img figcaption{font-size:.82rem;color:var(--ink2);margin-top:4px}
 .lib-view{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .lib-view .bar{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:.9rem}
 .lib-view .bar b{flex:1}
@@ -614,10 +615,8 @@ body.viewing-sample{padding-bottom:70px}
     <div class="bk-tabs" role="tablist" aria-label="後台功能">
       <button type="button" role="tab" class="on" aria-selected="true" data-bk="rec">學生紀錄</button>
       <button type="button" role="tab" aria-selected="false" data-bk="ans">擬答範例</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="video">開場影片</button>
+      <button type="button" role="tab" aria-selected="false" data-bk="cls">班級資料夾</button>
       <button type="button" role="tab" aria-selected="false" data-bk="guide">操作說明</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="fb">成果回饋</button>
-      <button type="button" role="tab" aria-selected="false" data-bk="lib">檔案庫</button>
     </div>
     <div class="bk-pane" id="bk-ans" hidden>
       <div class="bk-cards">
@@ -625,14 +624,11 @@ body.viewing-sample{padding-bottom:70px}
         <div class="bk-card"><h3>下載擬答 Word</h3><p class="help">直接產生擬答版的學習歷程 Word 檔，可當作評分參考或發給學生看格式。</p><button class="btn" type="button" id="tSampleDocx">下載擬答 Word</button></div>
       </div>
     </div>
-    <div class="bk-pane" id="bk-video" hidden>
-      <div class="bk-card" style="align-items:stretch">
-        <h3>成果發表會開場影片</h3>
-        <p class="help">英文配音＋中文字幕，約 2 分 31 秒。投影時建議按「全螢幕播放」，並把教室喇叭打開。</p>
-        <div class="vbox"><video id="bkVid" controls playsinline preload="metadata" src="opening.mp4"></video>
-          <div class="vmiss" id="bkVidMiss" hidden><b>找不到影片檔</b><span>請把「opening.mp4」和本頁一起上傳到 GitHub 同一個資料夾，或按下面按鈕先選電腦裡的影片來播放。</span><label class="btn">選擇影片檔<input type="file" id="bkVidPick" accept="video/*" hidden></label></div></div>
-        <div class="row"><button class="btn blue" type="button" id="bkVidFull">全螢幕播放</button><button class="btn" type="button" id="bkVidRestart">從頭播放</button></div>
-      </div>
+    <div class="bk-pane" id="bk-cls" hidden>
+      <p class="help" id="clsMsg">資料已用教師密碼加密，登入後自動解開。</p>
+      <div class="fb-chips" id="clsChips"></div>
+      <div id="clsBody" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div class="lib-view" id="libView" hidden><div class="bar"><b id="libViewName"></b><button class="btn sm" type="button" id="libViewDl">下載</button><button class="btn sm" type="button" id="libViewClose">關閉預覽</button></div><iframe id="libFrame" title="檔案預覽"></iframe></div>
     </div>
     <div class="bk-pane" id="bk-guide" hidden>
       <div class="tguide">
@@ -644,22 +640,10 @@ body.viewing-sample{padding-bottom:70px}
           <li><b>整理成果：</b>在「學習歷程」完成 6 個部分；命名與檔名格式未通過時無法匯出 Word。</li>
           <li><b>收件：</b>學生的填寫內容與軌跡會自動寫入您的 Google 試算表（「成果」與「軌跡」兩個工作表）；Word 檔依檔名格式另外繳交。</li>
           <li><b>看紀錄：</b>在「學生紀錄」按「從 Google 試算表讀取」，可依日期、類型篩選；按每列的「預覽」直接看該組填寫的畫面，也能匯出該組 Word。</li>
-          <li><b>發表會：</b>「成果回饋」有各組的肯定、建議與需要再次確認的項目，可列印回饋單或下載 PDF；「檔案庫」依班級與日期分資料夾，放獎狀、頒獎簡報等檔案，可預覽 PDF 或下載。這兩頁的資料與檔案都已用教師密碼加密。</li>
+          <li><b>班級資料夾：</b>每個班級（場次）一個資料夾，依「開場影片、成果回饋、獎狀、頒獎簡報、照片、影片」分區。開場影片可全螢幕投影；成果回饋可逐組檢視、列印回饋單或下載 PDF；獎狀 PDF 可頁內預覽；簡報與其他檔案可下載。資料夾內容已用教師密碼加密（目錄在 library.js，檔案在 files/）。要新增班級或補照片影片，把檔案與資料夾名稱交給 Claude 處理。</li>
         </ol>
         <p class="help">學生紀錄同時存在各自裝置的瀏覽器與您的試算表。請提醒學生全程使用同一台裝置與瀏覽器，不要用無痕模式。</p>
       </div>
-    </div>
-    <div class="bk-pane" id="bk-fb" hidden>
-      <p class="help" id="fbMsg">資料已用教師密碼加密，登入後自動解開。</p>
-      <div class="fb-chips" id="fbChips"></div>
-      <div id="fbCard"></div>
-      <div class="fb-common" id="fbCommon"></div>
-      <div class="row" style="justify-content:flex-end"><button class="btn" type="button" id="fbPrintAll">列印全部回饋單</button><button class="btn blue" type="button" id="fbPdf">下載成果回饋 PDF</button></div>
-    </div>
-    <div class="bk-pane" id="bk-lib" hidden>
-      <p class="help" id="libMsg">檔案已用教師密碼加密存放在網站上，登入後才解得開。點「預覽」在頁面內看 PDF，點「下載」存到電腦。</p>
-      <div id="libFolders" style="display:flex;flex-direction:column;gap:12px"></div>
-      <div class="lib-view" id="libView" hidden><div class="bar"><b id="libViewName"></b><button class="btn sm" type="button" id="libViewDl">下載</button><button class="btn sm" type="button" id="libViewClose">關閉預覽</button></div><iframe id="libFrame" title="檔案預覽"></iframe></div>
     </div>
     <div class="bk-pane" id="bk-rec">
     <div class="row" style="align-items:center"><button class="btn blue" type="button" id="trailLoad">從 Google 試算表讀取</button><a class="btn" id="trailSheet" href="#" target="_blank" rel="noopener" hidden>開啟試算表</a></div>
@@ -678,7 +662,6 @@ body.viewing-sample{padding-bottom:70px}
 <div id="printRoot"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.iife.js"></script>
-<script src="feedback-data.js"></script>
 <script src="library.js"></script>
 <script>
 (function(){
@@ -1400,7 +1383,7 @@ function openT(){ if(SAMPLE){openTrail();return;} $("#tDlg").hidden=false; $("#t
 function closeT(){ $("#tDlg").hidden=true; }
 async function doLogin(){
   const b=$("#tGo"); b.disabled=true; $("#tErr").textContent="驗證中…";
-  try{ SAMPLE=await unlock($("#tPw").value); tPwMem=$("#tPw").value; unlockFB($("#tPw").value); $("#tErr").textContent=""; $("#tBtn").classList.add("on"); $("#tBtnTxt").textContent="教師專區"; openT(); }
+  try{ SAMPLE=await unlock($("#tPw").value); tPwMem=$("#tPw").value; unlockLib($("#tPw").value); $("#tErr").textContent=""; $("#tBtn").classList.add("on"); $("#tBtnTxt").textContent="教師專區"; openT(); }
   catch(e){ $("#tErr").textContent= (window.crypto&&crypto.subtle)?"密碼不正確，請再試一次。":"此瀏覽器不支援解密，請改用新版 Chrome、Edge 或 Safari。"; }
   finally{ b.disabled=false; }
 }
@@ -1429,22 +1412,16 @@ $("#tDlg").addEventListener("click",e=>{if(e.target.id==="tDlg")closeT();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#tDlg").hidden)closeT();});
 $("#tSample").addEventListener("click",()=>{$("#trailView").hidden=true;enterSample();viewFrom="trail";});
 $("#tSampleDocx").addEventListener("click",()=>{$("#trailView").hidden=true;sampleDocx();viewFrom="trail";});
-$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; FB=null; LIB=null; renderFB(); renderLib(); tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
-function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","video","guide","fb","lib"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="video"){const v=$("#bkVid");if(v)v.pause();}}
+$("#tLogout").addEventListener("click",()=>{ if(viewingSample) exitSample(); SAMPLE=null; LIB=null; renderCls(); tPwMem=""; $("#trailView").hidden=true; $("#tBtn").classList.remove("on"); $("#tBtnTxt").textContent="教師"; closeT(); toast("已登出"); });
+function bkTab(k){$$(".bk-tabs button").forEach(b=>{const on=b.dataset.bk===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});["rec","ans","cls","guide"].forEach(x=>{$("#bk-"+x).hidden=x!==k;});if(k!=="cls")clsPause();}
 $$(".bk-tabs button").forEach(b=>b.addEventListener("click",()=>bkTab(b.dataset.bk)));
-{const v=$("#bkVid");
- v.addEventListener("error",()=>{$("#bkVidMiss").hidden=false;});
- v.addEventListener("loadeddata",()=>{$("#bkVidMiss").hidden=true;});
- $("#bkVidPick").addEventListener("change",e=>{const f=e.target.files[0];if(f){v.src=URL.createObjectURL(f);v.load();}});
- $("#bkVidFull").addEventListener("click",async()=>{try{await (v.requestFullscreen?v.requestFullscreen():v.webkitEnterFullscreen&&v.webkitEnterFullscreen());}catch(e){}v.play().catch(()=>{});});
- $("#bkVidRestart").addEventListener("click",()=>{v.currentTime=0;v.play().catch(()=>{});});}
 $("#sbExit").addEventListener("click",exitSample);
 $("#sbDocx").addEventListener("click",()=>$("#btnDocx").click());
 
 /* ---------- teacher: trail viewer ---------- */
 let trailSubs=[], trailSel=null, tPwMem="";
 function openTrail(){closeT();$("#trailView").hidden=false;renderTrailList();if(!trailSubs.length&&CLOUD)loadCloud();}
-$("#trailClose").addEventListener("click",()=>{$("#trailView").hidden=true;const v=$("#bkVid");if(v)v.pause();});
+$("#trailClose").addEventListener("click",()=>{$("#trailView").hidden=true;clsPause();});
 $("#trailLoad").addEventListener("click",()=>loadCloud());
 async function loadCloud(){
   const msg=$("#trailMsg");
@@ -1587,27 +1564,79 @@ bootRender(); drawSim(38); logEv("open",{}); save();
 if(!S.group.klass||!S.group.name){let asked=null;try{asked=sessionStorage.getItem(KEY+"-asked");}catch(e){}if(!asked){try{sessionStorage.setItem(KEY+"-asked","1");}catch(e){}setTimeout(openGroup,1200);}}
 if(CLOUD) setTimeout(()=>flush(false),3000);
 trackPaste($("#workspace"),()=>S.cur); trackPaste($("#portfolio"),()=>"portfolio"); trackPaste($("#thales"),()=>"thales");
-/* ---------- teacher: 成果回饋 / 獎狀 / 頒獎簡報 (data in feedback-data.js, AES-GCM, teacher password) ---------- */
-let FB=null, fbSel=0, certSel=0;
-async function unlockFB(pw){
-  FB=null;
-  try{
-    const L=window.FB_LOCK; if(!L){$("#fbMsg").textContent="找不到 feedback-data.js，請和本頁一起上傳到 GitHub 同一個資料夾。";return;}
-    const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
-    const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(L.s),iterations:L.n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
-    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},key,b64d(L.c));
-    FB=JSON.parse(new TextDecoder().decode(pt)); fbSel=0; certSel=0;
-  }catch(e){ $("#fbMsg").textContent="回饋資料的加密密碼和登入密碼不一致，無法解開。"; }
-  renderFB(); unlockLib(pw);
-}
-const gLabel=g=>`${g.cls} ${g.no}｜${g.name}`;
-function chips(el,sel,onPick){
-  if(!FB){el.innerHTML="";return;}
-  el.innerHTML=FB.groups.map((g,i)=>`<button type="button" class="${i===sel?"on":""}" data-i="${i}">${esc(g.cls)} ${esc(g.no)} ${esc(g.name)}</button>`).join("");
-  qa("button",el).forEach(b=>b.addEventListener("click",()=>onPick(+b.dataset.i)));
-}
+/* ---------- teacher: 班級資料夾 (manifest in library.js; files in files/*.enc; AES-GCM with the teacher password) ---------- */
+let LIB=null, libKey=null, libUrls={}, libJson={}, clsSel=0, fbSel=0;
+const CATS=["開場影片","成果回饋","獎狀","頒獎簡報","照片","影片","其他"];
+const MIME={pdf:"application/pdf",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",mp4:"video/mp4",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp"};
+const fmtSize=n=>!n?"":n>1048576?(n/1048576).toFixed(1)+" MB":Math.round(n/1024)+" KB";
 function qa(sel,root){return [...(root||document).querySelectorAll(sel)];}
-function fbCardHTML(g){
+function clsPause(){qa("#bk-cls video").forEach(v=>v.pause());}
+async function unlockLib(pw){
+  LIB=null; libKey=null; Object.values(libUrls).forEach(u=>URL.revokeObjectURL(u)); libUrls={}; libJson={}; clsSel=0;
+  try{
+    const L=window.LIB_LOCK; if(!L){$("#clsMsg").textContent="找不到 library.js，請和本頁一起上傳到 GitHub 同一個資料夾。";renderCls();return;}
+    const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+    libKey=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(L.s),iterations:L.n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},libKey,b64d(L.c));
+    LIB=JSON.parse(new TextDecoder().decode(pt));
+  }catch(e){ $("#clsMsg").textContent="班級資料夾的加密密碼和登入密碼不一致，無法解開。"; }
+  renderCls();
+}
+async function libBytes(x,btn){
+  const old=btn&&btn.textContent; if(btn){btn.disabled=true;btn.textContent="讀取中…";}
+  try{
+    const r=await fetch(x.path,{cache:"force-cache"}); if(!r.ok)throw new Error("fetch");
+    const buf=new Uint8Array(await r.arrayBuffer());
+    if(!x.enc)return buf;
+    return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:buf.slice(0,12)},libKey,buf.slice(12)));
+  }catch(e){ toast("無法開啟「"+x.name+"」，請確認檔案已一起上傳。"); return null; }
+  finally{ if(btn){btn.disabled=false;btn.textContent=old;} }
+}
+async function libUrl(x,btn){
+  if(!x.enc)return x.path;
+  if(libUrls[x.path])return libUrls[x.path];
+  const b=await libBytes(x,btn); if(!b)return null;
+  const u=URL.createObjectURL(new Blob([b],{type:MIME[x.kind]||MIME[(x.name.split(".").pop()||"").toLowerCase()]||"application/octet-stream"})); libUrls[x.path]=u; return u;
+}
+function dl(url,name){const a=document.createElement("a");a.href=url;a.download=name;a.click();}
+function itemCard(x,fi,ii){
+  const id=`data-f="${fi}" data-i="${ii}"`, meta=`<span class="help">${[fmtSize(x.size),x.note].filter(Boolean).map(esc).join(" · ")}</span>`;
+  if(x.kind==="video")return `<div class="bk-card cls-video" style="align-items:stretch"><h3>${esc(x.name)}</h3>${meta}<div class="vbox"><video controls playsinline preload="metadata" ${x.enc?"":`src="${esc(x.path)}"`}></video><div class="vmiss" hidden><b>還沒載入</b><span>按「載入影片」解密後播放。</span></div></div><div class="row">${x.enc?`<button class="btn" type="button" data-act="vload" ${id}>載入影片</button>`:""}<button class="btn blue" type="button" data-act="vfull" ${id}>全螢幕播放</button><button class="btn" type="button" data-act="vrestart" ${id}>從頭播放</button></div></div>`;
+  if(x.kind==="feedback")return `<div class="bk-card" style="align-items:stretch"><h3>${esc(x.name)}</h3>${meta}<div class="row"><button class="btn blue" type="button" data-act="fbopen" ${id}>開啟成果回饋</button></div><div class="cls-fb" hidden></div></div>`;
+  if(x.kind==="image")return `<figure class="cls-img" ${id}><div class="ph"></div><figcaption>${esc(x.name)}</figcaption></figure>`;
+  const canView=x.kind==="pdf";
+  return `<div class="bk-card"><h3>${esc(x.name)}</h3>${meta}<div class="row">${canView?`<button class="btn" type="button" data-act="view" ${id}>預覽</button>`:""}<button class="btn blue" type="button" data-act="dl" ${id}>下載</button></div></div>`;
+}
+function renderCls(){
+  const el=$("#clsBody"), chips=$("#clsChips"); $("#libView").hidden=true; clsPause();
+  if(!LIB){el.innerHTML="";chips.innerHTML="";return;}
+  $("#clsMsg").textContent="每個班級（場次）一個資料夾；資料夾內依類別分區。要新增班級或補照片影片，把檔案和資料夾名稱交給 Claude 加密後放上來。";
+  chips.innerHTML=LIB.folders.map((f,i)=>`<button type="button" class="${i===clsSel?"on":""}" data-i="${i}">${esc(f.name)}</button>`).join("");
+  qa("button",chips).forEach(b=>b.addEventListener("click",()=>{clsSel=+b.dataset.i;renderCls();}));
+  const f=LIB.folders[clsSel], fi=clsSel;
+  el.innerHTML=CATS.map(cat=>{
+    const items=f.items.map((x,ii)=>[x,ii]).filter(([x])=>(x.cat||"其他")===cat);
+    if(!items.length)return `<section class="cls-cat empty"><h3>${esc(cat)}</h3><p class="help">尚未加入。</p></section>`;
+    const isImg=items.every(([x])=>x.kind==="image");
+    return `<section class="cls-cat"><h3>${esc(cat)}<span>${items.length}</span></h3><div class="${isImg?"cls-gallery":"bk-cards"}">${items.map(([x,ii])=>itemCard(x,fi,ii)).join("")}</div></section>`;
+  }).join("");
+  qa("[data-act]",el).forEach(b=>b.addEventListener("click",()=>clsAct(b.dataset.act,LIB.folders[+b.dataset.f].items[+b.dataset.i],b)));
+  qa("figure.cls-img",el).forEach(async fg=>{const x=LIB.folders[+fg.dataset.f].items[+fg.dataset.i];const u=await libUrl(x);if(u){fg.querySelector(".ph").innerHTML=`<img src="${u}" alt="${esc(x.name)}" loading="lazy">`;fg.addEventListener("click",()=>window.open(u,"_blank"));}});
+}
+async function clsAct(act,x,btn){
+  const card=btn.closest(".bk-card");
+  if(act==="vload"){const v=card.querySelector("video");const u=await libUrl(x,btn);if(u){v.src=u;v.load();card.querySelector(".vmiss").hidden=true;}return;}
+  if(act==="vfull"){const v=card.querySelector("video");if(!v.src){if(x.enc){const u=await libUrl(x,btn);if(!u)return;v.src=u;}}try{await (v.requestFullscreen?v.requestFullscreen():v.webkitEnterFullscreen&&v.webkitEnterFullscreen());}catch(e){}v.play().catch(()=>{});return;}
+  if(act==="vrestart"){const v=card.querySelector("video");v.currentTime=0;v.play().catch(()=>{});return;}
+  if(act==="dl"){const u=await libUrl(x,btn);if(u)dl(u,x.name);return;}
+  if(act==="view"){const u=await libUrl(x,btn);if(!u)return;$("#libViewName").textContent=x.name;$("#libFrame").src=u;$("#libView").hidden=false;$("#libViewDl").onclick=()=>dl(u,x.name);$("#libView").scrollIntoView({behavior:"smooth",block:"start"});return;}
+  if(act==="fbopen"){const box=card.querySelector(".cls-fb");if(!box.hidden){box.hidden=true;btn.textContent="開啟成果回饋";return;}
+    let FB=libJson[x.path]; if(!FB){const b=await libBytes(x,btn);if(!b)return;FB=JSON.parse(new TextDecoder().decode(b));libJson[x.path]=FB;}
+    fbSel=0; box.hidden=false; btn.textContent="收合"; renderFB(box,FB); return;}
+}
+$("#libViewClose").addEventListener("click",()=>{$("#libView").hidden=true;$("#libFrame").src="about:blank";});
+/* feedback panel (inside a folder) */
+function fbCardHTML(FB,g){
   return `<div class="fb-card">
   <div class="fb-head"><div><div class="k">${esc(g.cls)} ${esc(g.no)}</div><h3>${esc(g.name)}</h3><div class="m">${esc(g.members)}</div></div>
    <div class="fb-award"><b>${esc(g.award)}</b><span>${esc(g.why)}</span></div></div>
@@ -1617,65 +1646,23 @@ function fbCardHTML(g){
   <div class="fb-foot"><button class="btn" type="button" data-fbprint="${FB.groups.indexOf(g)}">列印這組回饋單</button></div>
  </div>`;
 }
-function renderFB(){
-  const card=$("#fbCard"), com=$("#fbCommon");
-  if(!FB){card.innerHTML="";com.innerHTML="";chips($("#fbChips"),0,()=>{});return;}
-  $("#fbMsg").textContent="點組別切換。每組內容：肯定、建議、需要再次確認；紅圈細節在批改版 PDF。";
-  chips($("#fbChips"),fbSel,i=>{fbSel=i;renderFB();});
-  card.innerHTML=fbCardHTML(FB.groups[fbSel]);
-  qa("[data-fbprint]",card).forEach(b=>b.addEventListener("click",()=>printFB([+b.dataset.fbprint])));
-  com.innerHTML=`<div class="fb-card"><div class="fb-sec ok"><h4>全班都做到的</h4><ul>${FB.common_praise.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
-   <div class="fb-card"><div class="fb-sec adv"><h4>全班共同要注意的</h4><ul>${FB.common_advice.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>`;
+function renderFB(box,FB){
+  box.innerHTML=`<div class="fb-chips">${FB.groups.map((g,i)=>`<button type="button" class="${i===fbSel?"on":""}" data-i="${i}">${esc(g.cls)} ${esc(g.no)} ${esc(g.name)}</button>`).join("")}</div>
+   <div class="fb-one">${fbCardHTML(FB,FB.groups[fbSel])}</div>
+   <div class="fb-common"><div class="fb-card"><div class="fb-sec ok"><h4>全班都做到的</h4><ul>${FB.common_praise.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
+   <div class="fb-card"><div class="fb-sec adv"><h4>全班共同要注意的</h4><ul>${FB.common_advice.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div>
+   <div class="row" style="justify-content:flex-end"><button class="btn" type="button" data-fball="1">列印全部回饋單</button>${FB.pdf?`<button class="btn blue" type="button" data-fbpdf="1">下載成果回饋 PDF</button>`:""}</div>`;
+  qa(".fb-chips button",box).forEach(b=>b.addEventListener("click",()=>{fbSel=+b.dataset.i;renderFB(box,FB);}));
+  qa("[data-fbprint]",box).forEach(b=>b.addEventListener("click",()=>printFB(FB,[+b.dataset.fbprint])));
+  qa("[data-fball]",box).forEach(b=>b.addEventListener("click",()=>printFB(FB,FB.groups.map((_,i)=>i))));
+  qa("[data-fbpdf]",box).forEach(b=>b.addEventListener("click",()=>dl("data:application/pdf;base64,"+FB.pdf,FB.pdfName||"成果回饋.pdf")));
 }
 function printWith(html,cls){
   const root=$("#printRoot"); root.innerHTML=html; root.className=cls; document.body.classList.add("printing");
   const done=()=>{document.body.classList.remove("printing");root.innerHTML="";window.removeEventListener("afterprint",done);};
   window.addEventListener("afterprint",done); setTimeout(()=>window.print(),80);
 }
-function printFB(idx){ if(!FB)return; printWith(idx.map(i=>`<div class="pr-fb">${fbCardHTML(FB.groups[i])}</div>`).join(""),""); }
-$("#fbPrintAll").addEventListener("click",()=>FB&&printFB(FB.groups.map((_,i)=>i)));
-$("#fbPdf").addEventListener("click",()=>{ if(!FB)return; const a=document.createElement("a"); a.href="data:application/pdf;base64,"+FB.pdf; a.download=FB.pdfName||"成果回饋.pdf"; a.click(); });
-/* library (files/*.enc, AES-GCM with the teacher password; manifest in library.js) */
-let LIB=null, libKey=null, libUrls={};
-async function unlockLib(pw){
-  LIB=null; libKey=null; Object.values(libUrls).forEach(u=>URL.revokeObjectURL(u)); libUrls={};
-  try{
-    const L=window.LIB_LOCK; if(!L){$("#libMsg").textContent="找不到 library.js，請和本頁一起上傳到 GitHub 同一個資料夾。";renderLib();return;}
-    const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
-    libKey=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(L.s),iterations:L.n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
-    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(L.i)},libKey,b64d(L.c));
-    LIB=JSON.parse(new TextDecoder().decode(pt));
-  }catch(e){ $("#libMsg").textContent="檔案庫的加密密碼和登入密碼不一致，無法解開。"; }
-  renderLib();
-}
-const fmtSize=n=>n>1048576?(n/1048576).toFixed(1)+" MB":Math.round(n/1024)+" KB";
-const MIME={pdf:"application/pdf",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
-function renderLib(){
-  const el=$("#libFolders"); $("#libView").hidden=true;
-  if(!LIB){el.innerHTML="";return;}
-  el.innerHTML=LIB.folders.map((f,fi)=>`<details class="lib-folder" ${fi===0?"open":""}><summary><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${esc(f.name)}<span class="n">${f.files.length} 個檔案</span></summary>
-    ${f.files.map((x,i)=>`<div class="lib-file"><div class="ic ${MIME[x.type]?x.type:"other"}">${esc(x.type.toUpperCase())}</div><div class="meta"><b>${esc(x.name)}</b><span>${fmtSize(x.size)}${x.note?" · "+esc(x.note):""}</span></div>
-      <div class="row">${x.type==="pdf"?`<button class="btn sm" type="button" data-lib="view" data-f="${fi}" data-i="${i}">預覽</button>`:""}<button class="btn sm blue" type="button" data-lib="dl" data-f="${fi}" data-i="${i}">下載</button></div></div>`).join("")}
-  </details>`).join("");
-  qa("[data-lib]",el).forEach(b=>b.addEventListener("click",()=>libAct(b.dataset.lib,LIB.folders[+b.dataset.f].files[+b.dataset.i],b)));
-}
-async function libBlobUrl(x,btn){
-  if(libUrls[x.id])return libUrls[x.id];
-  const old=btn&&btn.textContent; if(btn){btn.disabled=true;btn.textContent="解密中…";}
-  try{
-    const r=await fetch(x.path,{cache:"force-cache"}); if(!r.ok)throw new Error("fetch");
-    const buf=new Uint8Array(await r.arrayBuffer());
-    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:buf.slice(0,12)},libKey,buf.slice(12));
-    const url=URL.createObjectURL(new Blob([pt],{type:MIME[x.type]||"application/octet-stream"})); libUrls[x.id]=url; return url;
-  }catch(e){ toast("無法開啟這個檔案，請確認 files 資料夾已一起上傳。"); return null; }
-  finally{ if(btn){btn.disabled=false;btn.textContent=old;} }
-}
-async function libAct(act,x,btn){
-  const url=await libBlobUrl(x,btn); if(!url)return;
-  if(act==="dl"){ const a=document.createElement("a"); a.href=url; a.download=x.name; a.click(); return; }
-  $("#libViewName").textContent=x.name; $("#libFrame").src=url; $("#libView").hidden=false; $("#libViewDl").onclick=()=>{const a=document.createElement("a");a.href=url;a.download=x.name;a.click();}; $("#libView").scrollIntoView({behavior:"smooth",block:"start"});
-}
-$("#libViewClose").addEventListener("click",()=>{$("#libView").hidden=true;$("#libFrame").src="about:blank";});
+function printFB(FB,idx){ printWith(idx.map(i=>`<div class="pr-fb">${fbCardHTML(FB,FB.groups[i])}</div>`).join(""),""); }
 
 })();
 </script>
